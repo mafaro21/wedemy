@@ -1,0 +1,9 @@
+background #fbfbfb
+main color #85ce31
+other color #89af98
+
+font family for favicon - shrikhand
+
+background #F8F7F7
+main #6fb650
+other #77aea6

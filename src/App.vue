@@ -1,30 +1,93 @@
-<template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+<template id="app">
+  <Navbar />
+  <router-view />
+  <Footer />
 </template>
 
+<script lang="ts">
+import Navbar from "@/components/Navbar.vue";
+import Footer from "@/components/Footer.vue";
+
+export default {
+  name: "App",
+  components: {
+    Navbar,
+    Footer,
+  },
+};
+</script>
+
+
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  /* background-color: #f8f7f7; */
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap"); */
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Public Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: #262a34;
+  min-height: 100vh;
+  /* margin-bottom: 90px; */
+}
+.wrapper {
+  min-height: 100vh;
+  margin-bottom: -90px;
 }
 
-#nav {
-  padding: 30px;
+/* this is basically like container in bootstrap */
+.main-view {
+  /* background-color: black; */
+  padding: 0 10% 0 10%;
+}
+/* button properties for navbar */
+.btn {
+  padding: 10%;
+  height: 40px;
+  width: 100px;
+  outline: none;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 0;
+}
+.btn:hover,
+.login-btn:hover {
+  cursor: pointer;
+  border: 0;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+/* button colors */
+.btn-accent {
+  background-color: #6fb650;
+}
+.btn-accent:hover {
+  background-color: #619f46;
+}
+.btn-accent-outline {
+  border: 0;
+
+  background-color: #dbedd3;
+}
+.btn-accent-outline:hover {
+  background-color: #f0fff0;
+  border: 2px solid #6fb650;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+/* button for login and signup */
+.login-btn {
+  height: 40px;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  border: 0;
+}
+.none {
+  text-decoration: none;
 }
 </style>
