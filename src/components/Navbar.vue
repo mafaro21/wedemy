@@ -10,7 +10,6 @@
       </router-link>
 
       <span class="p-input-icon-left p-mt-4">
-        <!-- <i class="pi pi-search" /> -->
         <input
           type="search"
           placeholder="Search for anything"
@@ -32,20 +31,11 @@
       <router-link to="/" class="p-mr-3 none logo">Wedemy</router-link>
     </div>
 
-    <div
-      class="p-d-flex main-only p-jc-center"
-      :model="items"
-      label="Toggle"
-      @click="toggle"
-      aria-haspopup="true"
-      aria-controls="overlay_tmenu"
-    >
-      Categories
+    <div class="main-only">
+      <MegaMenu :model="items" class="categories p-d-flex p-jc-around" />
     </div>
 
-    <TieredMenu :model="items" id="overlay_tmenu" ref="menu" :popup="true" />
-
-    <span class="p-input-icon-left p-m-auto">
+    <span class="p-input-icon-left">
       <!-- <i class="pi pi-search" /> -->
       <input
         type="search"
@@ -57,18 +47,13 @@
 
     <!-- log in/ sign up buttons -->
     <div class="p-d-flex">
-      <!-- <i
-        class="pi pi-2x pi-shopping-cart p-mr-3 p-mt-2"
-        style="fontsize: 2rem"
-      ></i> -->
-
       <!-- buttons if user is not logged in -->
       <router-link to="/login" class="none main-only">
         <button class="btn btn-accent p-mr-2">Log In</button>
       </router-link>
 
       <router-link to="/signup" class="none main-only">
-        <button class="btn btn-accent-outline p-mr-2">Sign Up</button>
+        <button class="btn btn-accent-outline p-mr-6">Sign Up</button>
       </router-link>
 
       <!-- username if logged in -->
@@ -89,33 +74,23 @@ export default {
       items: [
         {
           label: "Categories",
-          // icon: "pi pi-fw pi-file",
           items: [
-            {
-              label: "New",
-              icon: "pi pi-fw pi-plus",
-              items: [
-                {
-                  label: "Bookmark",
-                  icon: "pi pi-fw pi-bookmark",
-                },
-                {
-                  label: "Video",
-                  icon: "pi pi-fw pi-video",
-                },
-              ],
-            },
-            {
-              label: "Delete",
-              icon: "pi pi-fw pi-trash",
-            },
-            {
-              separator: true,
-            },
-            {
-              label: "Export",
-              icon: "pi pi-fw pi-external-link",
-            },
+            [
+              {
+                // label: "Category 1",
+                items: [
+                  { label: "Development", to: "/category" },
+                  { label: "Finance", to: "/category" },
+                  { label: "Design ", to: "/category" },
+                  { label: "Health ", to: "/category" },
+                  { label: "Videography ", to: "/category" },
+                  { label: "Real estate", to: "/category" },
+                  { label: "Music", to: "/category" },
+                  { label: "Office ", to: "/category" },
+                  { label: "IT & Software ", to: "/category" },
+                ],
+              },
+            ],
           ],
         },
       ],
@@ -138,7 +113,7 @@ export default {
 .nav {
   border-top: 9px solid;
   border-top-color: #00ff29;
-  padding: 9px;
+  padding: 9px 2% 9px 2%;
   border-style: solid;
   border-width: 9px 0px 0px 0px;
   /* border-image: linear-gradient(90deg, #102610 0%, #00ff29 100%); */
@@ -199,6 +174,11 @@ input::placeholder {
   padding: 0;
   /* height: 36px; */
   /* width: 0; */
+}
+.categories {
+  border: 0;
+  outline: none;
+  /* background-color: aqua; */
 }
 
 @media only screen and (max-width: 600px) {

@@ -10,7 +10,7 @@ import Textarea from "primevue/textarea";
 import Button from "primevue/button";
 import InputText from 'primevue/inputtext';
 import Sidebar from 'primevue/sidebar';
-import TieredMenu from 'primevue/tieredmenu';
+import MegaMenu from 'primevue/megamenu';
 import Password from 'primevue/password';
 import Card from 'primevue/card';
 
@@ -21,7 +21,7 @@ app.component('Button', Button)
 app.component('Textarea', Textarea)
 app.component('InputText', InputText)
 app.component('Sidebar', Sidebar)
-app.component('TieredMenu', TieredMenu)
+app.component('MegaMenu', MegaMenu)
 app.component('Password', Password)
 app.component('Card', Card)
 

@@ -2,22 +2,26 @@
   <div class="main-view p-pt-5 login-view wrapper">
     <h2>Login And Begin Learning!</h2>
 
-    <div class="p-pt-4">
-      <InputText
-        type="text"
-        v-model="email"
-        placeholder="Email"
-        class="field"
-      />
-    </div>
+    <form>
+      <div class="p-pt-4">
+        <InputText
+          type="text"
+          v-model="email"
+          placeholder="Email"
+          class="field"
+        />
+      </div>
 
-    <div class="p-mt-2">
-      <Password v-model="password" placeholder="Password" class="field" />
-    </div>
+      <div class="p-mt-2">
+        <Password v-model="password" placeholder="Password" class="field" />
+      </div>
 
-    <div>
-      <button class="btn-accent p-mt-2 field login-btn">Log In</button>
-    </div>
+      <div>
+        <button type="submit" class="btn-accent p-mt-2 field login-btn">
+          Log In
+        </button>
+      </div>
+    </form>
 
     <div class="p-pt-3">
       Don't have an account?

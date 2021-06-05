@@ -34,11 +34,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #262a34;
   min-height: 100vh;
+  max-width: 100vw;
   /* margin-bottom: 90px; */
 }
 .wrapper {
-  min-height: 100vh;
-  margin-bottom: -90px;
+  min-height: 91vh;
+  margin-bottom: 90px;
 }
 
 /* this is basically like container in bootstrap */
@@ -89,5 +90,33 @@ export default {
 }
 .none {
   text-decoration: none;
+}
+/* card */
+.card {
+  /* width: 19.5rem; */
+  /* width: 13.9rem; */
+  transition: ease-in-out 0.3s;
+  overflow: hidden;
+  /* padding: 0.5rem; */
+}
+.card:hover {
+  cursor: pointer;
+  box-shadow: 5px 5px 5px grey;
+}
+.card-title {
+  font-size: 19px;
+  font-weight: 600;
+}
+.card-tutor {
+  color: #636362;
+}
+/* product images in a catalog */
+.product-img {
+  width: 6px;
+  height: 140px;
+  transition: ease-in-out 0.6s;
+}
+.product-img:hover {
+  transform: scale(1.2);
 }
 </style>

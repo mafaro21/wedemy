@@ -15,8 +15,8 @@
         <h3>Learn this</h3>
         <p>blah blah just buy it</p>
 
-        <div class="p-d-flex">
-          <Card class="p-mt-3 card p-mr-3">
+        <div class="p-grid p-jc-start">
+          <Card class="p-mt-3 card p-col-12 p-md-3 p-lg-2 p-mr-5">
             <template #header>
               <img
                 alt="user header"
@@ -24,27 +24,21 @@
                 src="../images/1613872731202.png"
               />
             </template>
-            <template #title> How to hit a fat blunt </template>
-            <template #subtitle>Elon Musk</template>
-            <template #content> description </template>
+            <template #title>
+              <div class="card-title p-mt-2">How to hit a fat blunt</div>
+            </template>
+            <template #subtitle>
+              <div class="card-tutor">Elon Musk</div>
+            </template>
+            <template #content>
+              <div class="card-price">$$$</div>
+            </template>
           </Card>
-          <!-- <Card class="p-mt-3 card p-mr-3">
-          <template #header>
-            <img
-              alt="user header"
-              class="product-img"
-              src="../images/1613872731202.png"
-            />
-          </template>
-          <template #title> How to hit a fat blunt </template>
-          <template #subtitle>Elon Musk</template>
-          <template #content> description </template>
-        </Card> -->
         </div>
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="p-mt-6 home-section2 p-d-flex p-jc-evenly"
       :style="{ fontWeight: '800' }"
     >
@@ -58,23 +52,16 @@
       </div>
       <div class="main-view p-d-flex p-ai-center">
         <i class="pi pi-question p-mr-1" :style="{ fontSize: '21px' }"></i>
-        <p>i don't know what else</p>
+        <p>blah</p>
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- <Footer /> -->
 </template>
 
 <script lang="ts">
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import Footer from "@/components/Footer.vue";
-
 export default {
   name: "Home",
-  components: {
-    HelloWorld,
-    Footer,
-  },
   data() {
     document.title = "Home | Wedemy";
   },
@@ -90,24 +77,7 @@ export default {
   border-radius: 6px;
   padding: 26px;
 }
-.product-img {
-  width: 6px;
-  height: 190px;
-  transition: ease-in-out 0.6s;
-}
-.product-img:hover {
-  transform: scale(1.2);
-}
-.card {
-  /* width: 19.5rem; */
-  width: 17.3rem;
-  transition: ease-in-out 0.3s;
-  overflow: hidden;
-}
-.card:hover {
-  cursor: pointer;
-  box-shadow: 5px 5px 5px grey;
-}
+
 .home-section2 {
   border: 1px solid #dcdacb;
   width: 100%;
@@ -118,7 +88,7 @@ export default {
 @media only screen and (max-width: 600px) {
   .home-image {
     width: 100%;
-    height: 100px;
+    height: 150px;
   }
 }
 </style>
