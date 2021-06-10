@@ -1,38 +1,43 @@
 <template>
-  <div class="main-view p-pt-5 login-view wrapper">
+  <div class="main-view login-view wrapper">
     <h2>Create An Account!</h2>
 
     <form>
-      <div class="p-pt-4">
-        <InputText
-          type="text"
-          v-model="name"
+      <div style="margin-top: 20px">
+        <el-input
           placeholder="Name"
+          v-model="name"
           class="field"
-        />
+          clearable
+        ></el-input>
       </div>
 
-      <div class="p-mt-2">
-        <InputText
-          type="email"
+      <div style="margin-top: 8px">
+        <el-input
+          placeholder="E-mail"
           v-model="email"
-          placeholder="Email"
           class="field"
-        />
+          clearable
+        ></el-input>
       </div>
 
-      <div class="p-mt-2">
-        <Password v-model="password" placeholder="Password" class="field" />
+      <div style="margin-top: 8px">
+        <el-input
+          placeholder="Password"
+          v-model="password"
+          class="field"
+          show-password
+        ></el-input>
       </div>
 
-      <div>
-        <button type="submit" class="btn-accent p-mt-2 field login-btn">
+      <div style="margin-top: 8px">
+        <button type="submit" class="btn-accent field login-btn">
           Sign Up
         </button>
       </div>
     </form>
 
-    <div class="p-pt-3">
+    <div style="margin-top: 13px">
       Already have an account?
       <router-link to="/login" class="none" :style="{ fontWeight: '800' }"
         >LogIn</router-link
@@ -43,9 +48,18 @@
 
 
 <script>
+import { ref } from "vue";
+
 export default {
   data() {
     document.title = "Signup | Wedemy";
+  },
+  setup() {
+    return {
+      name: ref(""),
+      email: ref(""),
+      password: ref(""),
+    };
   },
 };
 </script>

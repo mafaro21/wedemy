@@ -1,34 +1,51 @@
 <template >
-  <div class="wrapper">
-    <h2 class="main-view p-mt-5">${category}</h2>
+  <div class="wrapper main-view" style="margin-top: 24px">
+    <h2 class="">${category}</h2>
 
-    <div class="main-view p-mt-4">
-      <p :style="{ fontWeight: '600' }" class="most-pop">Most Popular</p>
-      <Card class="p-mt-3 card p-col-12 p-md-3 p-lg-2 p-mr-5">
-        <template #header>
-          <img
-            alt="user header"
-            class="product-img"
-            src="../images/1613872731202.png"
-          />
-        </template>
-        <template #title>
-          <div class="card-title p-mt-2">How to hit a fat blunt</div>
-        </template>
-        <template #subtitle>
-          <div class="card-tutor">Elon Musk</div>
-        </template>
-        <template #content>
-          <div class="card-price">$$$</div>
-        </template>
-      </Card>
-    </div>
+    <el-skeleton animated :loading="loading" style="margin-top: 15px">
+      <p :style="{ fontWeight: '600', marginTop: '15px' }" class="most-pop">
+        Most Popular
+      </p>
+      {{ api.status }}
+      <p>{{ work.body }}</p>
+      <!-- <p>{{ work[0].title }}</p> -->
+
+      <div
+        v-for="api in api"
+        :key="api.id"
+        class="most-pop"
+        style="margin-top: 19px"
+      >
+        <p>{{ api.title }}</p>
+        <br />
+        {{ api.body }}
+      </div>
+    </el-skeleton>
   </div>
 </template>
+
 <script>
+import axios from "axios";
 export default {
   data() {
     document.title = "${category} | Wedemy";
+    return {
+      api: [],
+      work: [],
+      loading: true,
+    };
+  },
+
+  mounted() {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
+      this.api = res.data;
+      this.work = res.data[0];
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+      console.log(res.data);
+      console.log(res.data[0]);
+    });
   },
 };
 </script>

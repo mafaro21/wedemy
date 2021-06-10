@@ -8,33 +8,38 @@
       as="image"
     />
 
-    <div class="home main-view p-mt-4">
+    <div class="home main-view" style="margin-top: 40px">
       <h1>View some of our finest courses, you sick fuck</h1>
 
-      <div class="home-view p-mt-3">
+      <div class="home-view" style="margin-top: 20px">
         <h3>Learn this</h3>
         <p>blah blah just buy it</p>
 
-        <div class="p-grid p-jc-start">
-          <Card class="p-mt-3 card p-col-12 p-md-3 p-lg-2 p-mr-5">
-            <template #header>
-              <img
-                alt="user header"
-                class="product-img"
-                src="../images/1613872731202.png"
-              />
-            </template>
-            <template #title>
-              <div class="card-title p-mt-2">How to hit a fat blunt</div>
-            </template>
-            <template #subtitle>
-              <div class="card-tutor">Elon Musk</div>
-            </template>
-            <template #content>
-              <div class="card-price">$$$</div>
-            </template>
-          </Card>
-        </div>
+        <!-- grid -->
+        <!-- <div class=""> -->
+        <el-row type="flex" justify="space-around" style="margin-top: 20px">
+          <el-col
+            :span="4"
+            v-for="(o, index) in 9"
+            :key="o"
+            :offset="index > 0 ? 2 : 0"
+          >
+            <el-card
+              :body-style="{ padding: '0px' }"
+              shadow="hover"
+              style="margin-bottom: 13px"
+            >
+              <img src="../images/1613872731202.png" class="product-img" />
+              <div style="padding: 14px">
+                <span>Yummy hamburger</span>
+                <div class="bottom">
+                  <el-button type="text" class="button">Operating</el-button>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+        <!-- </div> -->
       </div>
     </div>
 
@@ -56,7 +61,6 @@
       </div>
     </div> -->
   </div>
-  <!-- <Footer /> -->
 </template>
 
 <script lang="ts">
