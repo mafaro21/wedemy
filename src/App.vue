@@ -1,7 +1,9 @@
 <template id="app">
+  <!-- <el-scrollbar height="400px" > -->
   <Navbar />
   <router-view />
   <Footer />
+  <!-- </el-scrollbar> -->
 </template>
 
 <script lang="ts">
@@ -49,7 +51,7 @@ export default {
 }
 /* button properties for navbar */
 .btn {
-  padding: 10%;
+  padding: 1%;
   height: 40px;
   width: 100px;
   outline: none;
@@ -112,11 +114,25 @@ export default {
 }
 /* product images in a catalog */
 .product-img {
-  width: 6px;
+  width: auto;
   height: 140px;
   transition: ease-in-out 0.6s;
 }
 .product-img:hover {
   transform: scale(1.2);
+}
+
+.phone-only {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn {
+    width: 80px;
+  }
+
+  .phone-only {
+    display: block;
+  }
 }
 </style>

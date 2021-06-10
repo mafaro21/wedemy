@@ -1,107 +1,133 @@
 <template>
-  <div class="nav p-d-flex p-jc-between p-ai-center">
-    <Sidebar v-model:visible="visibleLeft">
-      <router-link to="/login" class="none">
-        <button class="btn btn-accent btn-sidebar p-mr-2">Log In</button>
-      </router-link>
-
-      <router-link to="/signup" class="none">
-        <button class="btn btn-accent-outline btn-sidebar">Sign Up</button>
-      </router-link>
-
-      <span class="p-input-icon-left p-mt-4">
-        <input
-          type="search"
-          placeholder="Search for anything"
-          maxlength="20"
-          class="input-sidebar"
-        />
-      </span>
-    </Sidebar>
-
-    <div class="display" @click="visibleLeft = true">
-      <Button icon="pi pi-align-justify" />
+  <el-row type="flex" justify="space-between" class="nav">
+    <!-- <Drawer /> -->
+    <!-- button for sideview, only shows on smaller screens -->
+    <div class="phone-only">
+      <el-button @click="drawer = true" type="primary" class="phone-only">
+        <i class="el-icon-s-unfold phone-only"></i>
+      </el-button>
     </div>
+
+    <!-- the sideview -->
+    <el-drawer
+      size="70%"
+      title="I am the title"
+      v-model="drawer"
+      :with-header="false"
+      :direction="direction"
+    >
+      <!-- side searchbar -->
+      <div style="padding: 16px; margin-top: 15px">
+        <el-input
+          placeholder="Type something"
+          prefix-icon="el-icon-search"
+          class="main-only"
+          maxlength="20"
+          v-model="search"
+          clearable
+        >
+        </el-input>
+
+        <!-- side login/signup buttons -->
+        <el-row type="flex" justify="space-around" style="margin-top: 10px">
+          <router-link to="/login" class="none">
+            <button class="btn btn-accent">Log In</button>
+          </router-link>
+
+          <router-link to="/signup" class="none">
+            <button class="btn btn-accent-outline">Sign Up</button>
+          </router-link>
+        </el-row>
+      </div>
+    </el-drawer>
 
     <!-- logo -->
-    <div class="p-d-flex p-jc-start p-mt-2 nav-icon">
+    <div class="nav-icon">
       <router-link to="/"
-        ><img src="../assets/android-chrome-512x512.png" class="icon p-mr-2"
+        ><img
+          src="../assets/android-chrome-512x512.png"
+          class="icon"
+          style="margin-top: 3px"
       /></router-link>
-      <router-link to="/" class="p-mr-3 none logo">Wedemy</router-link>
+      <router-link to="/" class="none logo">Wedemy</router-link>
     </div>
 
-    <div class="main-only">
-      <MegaMenu :model="items" class="categories p-d-flex p-jc-around" />
+    <!-- category dropdown -->
+    <div
+      class="main-only"
+      :style="{ marginTop: '13px', textDecoration: 'none' }"
+    >
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          Categories<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <router-link to="/category"
+              ><el-dropdown-item>Development</el-dropdown-item>
+            </router-link>
+            <el-dropdown-item>Finance</el-dropdown-item>
+            <el-dropdown-item>Design</el-dropdown-item>
+            <el-dropdown-item>Health</el-dropdown-item>
+            <el-dropdown-item>Videography</el-dropdown-item>
+            <el-dropdown-item>Real estate</el-dropdown-item>
+            <el-dropdown-item>Music</el-dropdown-item>
+            <el-dropdown-item>Office </el-dropdown-item>
+            <el-dropdown-item>IT & Software</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
 
-    <span class="p-input-icon-left">
-      <!-- <i class="pi pi-search" /> -->
-      <input
-        type="search"
-        placeholder="Search for anything"
-        maxlength="20"
+    <!-- search bar -->
+    <div class="demo-input-suffix main-only">
+      <el-input
+        placeholder="Type something"
+        prefix-icon="el-icon-search"
         class="main-only"
-      />
-    </span>
+        maxlength="20"
+        v-model="search"
+        clearable
+      >
+      </el-input>
+    </div>
 
     <!-- log in/ sign up buttons -->
-    <div class="p-d-flex">
+    <div class="">
       <!-- buttons if user is not logged in -->
       <router-link to="/login" class="none main-only">
-        <button class="btn btn-accent p-mr-2">Log In</button>
+        <button class="btn btn-accent">Log In</button>
       </router-link>
 
       <router-link to="/signup" class="none main-only">
-        <button class="btn btn-accent-outline p-mr-6">Sign Up</button>
+        <button class="btn btn-accent-outline">Sign Up</button>
       </router-link>
 
       <!-- username if logged in -->
-      <!-- <i class="pi pi-user p-mr-1"></i>
-      <p>pogchamp79</p> -->
+      <!-- <p>pogchamp79</p> -->
     </div>
-  </div>
+  </el-row>
 </template>
 
 <script lang="ts">
-// import { ref } from "vue";
+import { ref } from "vue";
+// import Drawer from "./Drawer.vue";
 
 export default {
   name: "Navbar",
+  // components: {
+  //   Drawer,
+  // },
 
   data() {
     return {
-      items: [
-        {
-          label: "Categories",
-          items: [
-            [
-              {
-                // label: "Category 1",
-                items: [
-                  { label: "Development", to: "/category" },
-                  { label: "Finance", to: "/category" },
-                  { label: "Design ", to: "/category" },
-                  { label: "Health ", to: "/category" },
-                  { label: "Videography ", to: "/category" },
-                  { label: "Real estate", to: "/category" },
-                  { label: "Music", to: "/category" },
-                  { label: "Office ", to: "/category" },
-                  { label: "IT & Software ", to: "/category" },
-                ],
-              },
-            ],
-          ],
-        },
-      ],
-
-      //   methods: {
-      //     toggle(event) {
-      //         this.refs.menu.toggle(event);
-      //     }
-      // },
-
-      visibleLeft: false,
+      drawer: false,
+      direction: "ltr",
+    };
+  },
+  setup() {
+    return {
+      search: ref(""),
     };
   },
 };
@@ -180,6 +206,9 @@ input::placeholder {
   outline: none;
   /* background-color: aqua; */
 }
+.phone-only {
+  display: none;
+}
 
 @media only screen and (max-width: 600px) {
   .logo,
@@ -189,13 +218,17 @@ input::placeholder {
     display: none;
   }
 
+  .phone-only {
+    display: block;
+  }
+
   .display {
     display: block;
   }
 
   .icon {
     margin-top: -10%;
-    margin-left: 39%;
+    margin-left: -89%;
   }
 }
 </style>
