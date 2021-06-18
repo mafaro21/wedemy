@@ -24,7 +24,10 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  /* background-color: #f8f7f7; */
+}
+
+body {
+  background-color: #535353;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
@@ -46,7 +49,6 @@ export default {
 
 /* this is basically like container in bootstrap */
 .main-view {
-  /* background-color: black; */
   padding: 0 10% 0 10%;
 }
 /* button properties for navbar */
@@ -80,6 +82,13 @@ export default {
 .btn-accent-outline:hover {
   background-color: #f0fff0;
   border: 2px solid #6fb650;
+}
+
+/* login or signup pages */
+.login-view {
+  padding: 0 40% 0 40%;
+  margin-top: 4%;
+  text-align: center;
 }
 
 /* button for login and signup */
@@ -133,6 +142,9 @@ export default {
 
   .phone-only {
     display: block;
+  }
+  .login-view {
+    padding: 0;
   }
 }
 </style>
