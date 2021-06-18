@@ -80,9 +80,9 @@
     </div>
 
     <!-- search bar -->
-    <div class="demo-input-suffix main-only">
+    <div class="demo-input-suffix main-only" style="width: 40%">
       <el-input
-        placeholder="Type something"
+        placeholder="Search something"
         prefix-icon="el-icon-search"
         class="main-only"
         maxlength="20"
@@ -104,7 +104,24 @@
       </router-link>
 
       <!-- username if logged in -->
-      <!-- <p>pogchamp79</p> -->
+      <!-- <div
+        class="main-only"
+        :style="{ marginTop: '13px', textDecoration: 'none' }"
+      >
+        <el-dropdown>
+          <span class="el-dropdown-link" style="font-size: 16px">
+            pogchamp79<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <router-link to="/category"
+                ><el-dropdown-item>My Account</el-dropdown-item>
+              </router-link>
+              <el-dropdown-item>My Courses</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div> -->
     </div>
   </el-row>
 </template>

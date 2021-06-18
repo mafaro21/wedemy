@@ -2,13 +2,12 @@
   <div class="wrapper main-view" style="margin-top: 24px">
     <h2 class="">${category}</h2>
 
-    <el-skeleton animated :loading="loading" style="margin-top: 15px">
+    <!-- <el-skeleton animated :loading="loading" style="margin-top: 15px">
       <p :style="{ fontWeight: '600', marginTop: '15px' }" class="most-pop">
         Most Popular
       </p>
       {{ api.status }}
       <p>{{ work.body }}</p>
-      <!-- <p>{{ work[0].title }}</p> -->
 
       <div
         v-for="api in api"
@@ -20,7 +19,7 @@
         <br />
         {{ api.body }}
       </div>
-    </el-skeleton>
+    </el-skeleton> -->
   </div>
 </template>
 
@@ -29,24 +28,24 @@ import axios from "axios";
 export default {
   data() {
     document.title = "${category} | Wedemy";
-    return {
-      api: [],
-      work: [],
-      loading: true,
-    };
+    // return {
+    //   api: [],
+    //   work: [],
+    //   loading: true,
+    // };
   },
 
-  mounted() {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-      this.api = res.data;
-      this.work = res.data[0];
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
-      console.log(res.data);
-      console.log(res.data[0]);
-    });
-  },
+  // mounted() {
+  //   axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
+  //     this.api = res.data;
+  //     this.work = res.data[0];
+  //     setTimeout(() => {
+  //       this.loading = false;
+  //     }, 2000);
+  //     console.log(res.data);
+  //     console.log(res.data[0]);
+  //   });
+  // },
 };
 </script>
 
