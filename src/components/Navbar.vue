@@ -1,45 +1,6 @@
 <template>
   <el-row type="flex" justify="space-between" class="nav">
-    <!-- <Drawer /> -->
-    <!-- button for sideview, only shows on smaller screens -->
-    <div class="phone-only">
-      <el-button @click="drawer = true" type="primary" class="phone-only">
-        <i class="el-icon-s-unfold phone-only"></i>
-      </el-button>
-    </div>
-
-    <!-- the sideview -->
-    <el-drawer
-      size="70%"
-      title="I am the title"
-      v-model="drawer"
-      :with-header="false"
-      :direction="direction"
-    >
-      <!-- side searchbar -->
-      <div style="padding: 16px; margin-top: 15px">
-        <el-input
-          placeholder="Type something"
-          prefix-icon="el-icon-search"
-          class="main-only"
-          maxlength="20"
-          v-model="search"
-          clearable
-        >
-        </el-input>
-
-        <!-- side login/signup buttons -->
-        <el-row type="flex" justify="space-around" style="margin-top: 10px">
-          <router-link to="/login" class="none">
-            <button class="btn btn-accent">Log In</button>
-          </router-link>
-
-          <router-link to="/signup" class="none">
-            <button class="btn btn-accent-outline">Sign Up</button>
-          </router-link>
-        </el-row>
-      </div>
-    </el-drawer>
+    <Drawer />
 
     <!-- logo -->
     <div class="nav-icon">
@@ -93,58 +54,63 @@
     </div>
 
     <!-- log in/ sign up buttons -->
+    <div style="margin-top: 13px" class="main-only">
+      <el-badge :value="12" class="item">
+        <i class="el-icon-shopping-cart-2"></i>
+      </el-badge>
+    </div>
+
     <div class="">
       <!-- buttons if user is not logged in -->
-      <router-link to="/login" class="none main-only">
+      <!-- <router-link to="/login" class="none main-only">
         <button class="btn btn-accent">Log In</button>
       </router-link>
 
       <router-link to="/signup" class="none main-only">
         <button class="btn btn-accent-outline">Sign Up</button>
-      </router-link>
+      </router-link> -->
 
       <!-- username if logged in -->
-      <!-- <div
+
+      <div
         class="main-only"
-        :style="{ marginTop: '13px', textDecoration: 'none' }"
+        :style="{ textDecoration: 'none', display: 'flex' }"
       >
         <el-dropdown>
-          <span class="el-dropdown-link" style="font-size: 16px">
-            pogchamp79<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
+          <el-avatar
+            :size="36"
+            icon="el-icon-user-solid"
+            style="margin-top: 1px"
+          ></el-avatar>
+          <span class="el-dropdown-link" style="font-size: 16px"> </span>
           <template #dropdown>
             <el-dropdown-menu>
+              <el-dropdown-item>pogchamp79</el-dropdown-item>
               <router-link to="/category"
-                ><el-dropdown-item>My Account</el-dropdown-item>
+                ><el-dropdown-item divided>My Account</el-dropdown-item>
               </router-link>
               <el-dropdown-item>My Courses</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div> -->
+      </div>
     </div>
   </el-row>
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-// import Drawer from "./Drawer.vue";
+// import { ref } from "vue";
+import Drawer from "./Drawer.vue";
 
 export default {
   name: "Navbar",
-  // components: {
-  //   Drawer,
-  // },
+  components: {
+    Drawer,
+  },
 
   data() {
     return {
-      drawer: false,
-      direction: "ltr",
-    };
-  },
-  setup() {
-    return {
-      search: ref(""),
+      search: "",
     };
   },
 };

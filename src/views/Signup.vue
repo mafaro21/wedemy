@@ -1,6 +1,9 @@
 <template>
   <div class="main-view login-view wrapper">
     <h2>Create An Account!</h2>
+    <p style="color: red; margin-top: 10px; font-weight: 600">
+      {{ signupError }}
+    </p>
 
     <el-form status-icon :model="signupForm" :rules="rules" ref="signupForm">
       <el-form-item style="margin-top: 8px" prop="name">
@@ -58,12 +61,11 @@
         >LogIn</router-link
       >
     </div>
-    <router-link to="/logintest">logintest</router-link>
   </div>
 </template>
 
 
-<script>
+<script >
 // import { ref } from "vue";
 
 export default {
@@ -72,7 +74,7 @@ export default {
 
     // validation for name
     var checkName = (rule, value, callback) => {
-      let reg = /[^0-9A-Za-z_]/gi;
+      let reg = /[^0-9A-Za-z_.]/gi;
 
       if (!value) {
         return callback(new Error("Name can't be empty"));
@@ -103,8 +105,12 @@ export default {
 
     // validation for password
     var checkPassword = (rule, value, callback) => {
+      let reg = /[<>;&]/gi;
+
       if (!value) {
         callback(new Error("Password can't be empty"));
+      } else if (reg.test(this.signupForm.password)) {
+        callback(new Error("Password contains illegal characters"));
       } else if (value.length < 6) {
         return callback(
           new Error("Password should be atleast 6 characters long")
@@ -141,6 +147,9 @@ export default {
         password: [{ validator: checkPassword, trigger: "blur" }],
         reenterpass: [{ validator: checkReenter, trigger: "blur" }],
       },
+
+      //other
+      signupError: "",
     };
   },
 
@@ -150,7 +159,7 @@ export default {
         if (valid) {
           alert("submit!");
         } else {
-          console.log("error submit!!");
+          this.signupError = "Some credentials haven't been met";
           return false;
         }
       });
@@ -161,12 +170,4 @@ export default {
 
 
 <style >
-.login-view {
-  padding: 0 40% 0 40%;
-  margin-top: 4%;
-  text-align: center;
-}
-.field {
-  width: 350px;
-}
 </style>

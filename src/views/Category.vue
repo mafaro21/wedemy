@@ -1,25 +1,41 @@
 <template >
   <div class="wrapper main-view" style="margin-top: 24px">
-    <h2 class="">${category}</h2>
+    <h2 class="most-pop">${category}</h2>
 
-    <!-- <el-skeleton animated :loading="loading" style="margin-top: 15px">
-      <p :style="{ fontWeight: '600', marginTop: '15px' }" class="most-pop">
-        Most Popular
-      </p>
-      {{ api.status }}
-      <p>{{ work.body }}</p>
-
-      <div
-        v-for="api in api"
-        :key="api.id"
-        class="most-pop"
-        style="margin-top: 19px"
-      >
-        <p>{{ api.title }}</p>
-        <br />
-        {{ api.body }}
-      </div>
-    </el-skeleton> -->
+    <!-- <el-skeleton animated :loading="loading" style="margin-top: 15px"> -->
+    <el-space
+      direction="vertical"
+      alignment="start"
+      :size="30"
+      style="margin-top: 20px; margin-left: 20px"
+    >
+      <el-space wrap :size="size">
+        <el-card
+          :body-style="{ padding: '0px' }"
+          shadow="hover"
+          style="margin-bottom: 13px"
+          v-for="o in 12"
+          :key="o"
+        >
+          <img src="../images/1613872731202.png" class="product-img" />
+          <div style="padding: 14px">
+            <span class="card-title">Course name</span>
+            <div class="card-author"><span>Course author</span></div>
+            <!-- rating from users -->
+            <el-rate
+              v-model="value"
+              disabled
+              show-score
+              text-color="#ff9900"
+              score-template="{value} points"
+            >
+            </el-rate>
+            <div>$19.99</div>
+          </div>
+        </el-card>
+      </el-space>
+    </el-space>
+    <!-- </el-skeleton> -->
   </div>
 </template>
 
@@ -28,11 +44,13 @@ import axios from "axios";
 export default {
   data() {
     document.title = "${category} | Wedemy";
-    // return {
-    //   api: [],
-    //   work: [],
-    //   loading: true,
-    // };
+    return {
+      size: "large",
+      value: 4.7,
+      // api: [],
+      // work: [],
+      // loading: true,
+    };
   },
 
   // mounted() {

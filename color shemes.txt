@@ -4,6 +4,8 @@ other color #89af98
 
 font family for favicon - shrikhand
 
-background #F8F7F7
+using this one ->
+background #F4F4F4
 main #6fb650
-other #77aea6
+other #95a1b8
+dark #26222b
