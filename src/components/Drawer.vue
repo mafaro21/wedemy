@@ -1,4 +1,5 @@
 <template>
+  <!-- <Drawer /> -->
   <!-- button for sideview, only shows on smaller screens -->
   <div class="phone-only">
     <el-button @click="drawer = true" type="primary" class="phone-only">
@@ -42,7 +43,14 @@
 
 <script>
 export default {
-  name: Drawer,
+  name: "Drawer",
+
+  data() {
+    return {
+      drawer: false,
+      direction: "ltr",
+    };
+  },
 };
 </script>
 

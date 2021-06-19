@@ -27,7 +27,8 @@ export default {
 }
 
 body {
-  background-color: #535353;
+  /* background-color: #535353; */
+  background-color: #f4f4f4;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
@@ -74,6 +75,13 @@ body {
 .btn-accent:hover {
   background-color: #619f46;
 }
+.btn-accent2 {
+  /* background-color: #939bb1; */
+  background-color: #95a1b8;
+}
+.btn-accent2:hover {
+  background-color: #70798a;
+}
 .btn-accent-outline {
   border: 0;
 
@@ -86,7 +94,7 @@ body {
 
 /* login or signup pages */
 .login-view {
-  padding: 0 40% 0 40%;
+  padding: 0 40% 0 39%;
   margin-top: 4%;
   text-align: center;
 }
@@ -104,11 +112,9 @@ body {
 }
 /* card */
 .card {
-  /* width: 19.5rem; */
-  /* width: 13.9rem; */
+  /* width: 200px; */
   transition: ease-in-out 0.3s;
   overflow: hidden;
-  /* padding: 0.5rem; */
 }
 .card:hover {
   cursor: pointer;
@@ -118,13 +124,15 @@ body {
   font-size: 19px;
   font-weight: 600;
 }
-.card-tutor {
+.card-author {
   color: #636362;
+  font-size: 14px;
 }
+
 /* product images in a catalog */
 .product-img {
-  width: auto;
-  height: 140px;
+  /* width: 210px; */
+  height: 160px;
   transition: ease-in-out 0.6s;
 }
 .product-img:hover {
@@ -145,6 +153,13 @@ body {
   }
   .login-view {
     padding: 0;
+  }
+  .main-view {
+    padding: 0 2% 0 2%;
+  }
+  .product-img {
+    width: 100%;
+    height: 200px;
   }
 }
 </style>

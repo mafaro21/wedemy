@@ -1,6 +1,9 @@
 <template >
   <div class="main-view login-view wrapper">
     <h2>Login And Continue Learning!</h2>
+    <p style="color: red; margin-top: 10px; font-weight: 600">
+      {{ loginError }}
+    </p>
 
     <el-form status-icon :model="loginForm" :rules="rules" ref="loginForm">
       <el-form-item style="margin-top: 8px" prop="email">
@@ -61,8 +64,12 @@ export default {
 
     // validation for password
     var checkPassword = (rule, value, callback) => {
+      let reg = /[<>;&]/gi;
+
       if (!value) {
         callback(new Error("Password can't be empty"));
+      } else if (reg.test(this.loginForm.password)) {
+        callback(new Error("Password contains illegal characters"));
       } else if (value.length < 6) {
         return callback(
           new Error("Password should be atleast 6 characters long")
@@ -74,10 +81,8 @@ export default {
 
     return {
       loginForm: {
-        name: "",
         email: "",
         password: "",
-        reenterpass: "",
       },
 
       // rules for the validation
@@ -85,6 +90,9 @@ export default {
         email: [{ validator: checkEmail, trigger: "blur" }],
         password: [{ validator: checkPassword, trigger: "blur" }],
       },
+
+      //otehr
+      loginError: "",
     };
   },
 
@@ -94,7 +102,7 @@ export default {
         if (valid) {
           alert("submit!");
         } else {
-          console.log("error submit!!");
+          this.loginError = "Some credentials haven't been met";
           return false;
         }
       });
@@ -104,7 +112,4 @@ export default {
 </script>
 
 <style >
-.field {
-  width: 350px;
-}
 </style>
