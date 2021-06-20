@@ -28,11 +28,19 @@ export default {
 
 body {
   /* background-color: #535353; */
-  background-color: #f4f4f4;
+  background-color: var(--background);
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap"); */
+
+:root {
+  --accent1: #6fb650;
+  --accent2: #95a1b8;
+  --background: #f4f4f4;
+  --dark: #26222b;
+  --border: #cfcfcf;
+}
 
 #app {
   font-family: "Public Sans", system-ui, sans-serif;
@@ -46,6 +54,9 @@ body {
 .wrapper {
   min-height: 91vh;
   margin-bottom: 90px;
+}
+.top-margin {
+  margin-top: 24px;
 }
 
 /* this is basically like container in bootstrap */
@@ -62,6 +73,9 @@ body {
   font-weight: 600;
   border: 0;
 }
+.btn-auto {
+  width: auto;
+}
 .btn:hover,
 .login-btn:hover {
   cursor: pointer;
@@ -70,7 +84,7 @@ body {
 
 /* button colors */
 .btn-accent {
-  background-color: #6fb650;
+  background-color: var(--accent1);
 }
 .btn-accent:hover {
   background-color: #619f46;
@@ -112,13 +126,14 @@ body {
 }
 /* card */
 .card {
-  /* width: 200px; */
+  /* width: 25%; */
+  /* width: 10px; */
   transition: ease-in-out 0.3s;
   overflow: hidden;
 }
 .card:hover {
   cursor: pointer;
-  box-shadow: 5px 5px 5px grey;
+  box-shadow: 70px 70px 70px grey;
 }
 .card-title {
   font-size: 19px;
@@ -133,6 +148,7 @@ body {
 .product-img {
   /* width: 210px; */
   height: 160px;
+  /* height: 1%; */
   transition: ease-in-out 0.6s;
 }
 .product-img:hover {

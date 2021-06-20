@@ -74,7 +74,7 @@ export default {
   width: 100%;
 }
 .home-view {
-  border: 1px solid #dcdacb;
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 26px;
 }

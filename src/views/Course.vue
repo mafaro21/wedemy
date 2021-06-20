@@ -17,8 +17,8 @@
       </div>
 
       <div class="course-details">
-        course name
-        <p>course desription</p>
+        <h1>course name</h1>
+        <p style="font-size: 19px">course desription</p>
         <p class="course-view" style="margin-top: 9px">
           <el-rate
             v-model="value"

@@ -11,3 +11,7 @@
 - courses page
 - added extra regex for login/signup
 - changed the theme
+
+20-6-2021
+- cart page
+- added font awesome
