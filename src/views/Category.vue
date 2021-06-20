@@ -16,6 +16,7 @@
           style="margin-bottom: 13px"
           v-for="o in 12"
           :key="o"
+          class="card"
         >
           <img src="../images/1613872731202.png" class="product-img" />
           <div style="padding: 14px">
