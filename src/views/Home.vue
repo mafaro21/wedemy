@@ -9,7 +9,7 @@
     />
 
     <div class="home main-view" style="margin-top: 40px">
-      <h1>View some of our finest courses, you sick fuck</h1>
+      <h1>View some of our finest courses</h1>
 
       <div class="home-view" style="margin-top: 20px">
         <h3>Learn this</h3>
@@ -28,7 +28,7 @@
                 :body-style="{ padding: '0px' }"
                 shadow="hover"
                 style="margin-bottom: 13px"
-                v-for="o in 12"
+                v-for="o in 5"
                 :key="o"
               >
                 <img src="../images/1613872731202.png" class="product-img" />
@@ -50,6 +50,27 @@
             </el-space>
           </el-space>
         </router-link>
+      </div>
+
+      <!-- top categories -->
+      <div style="margin-top: 40px">
+        <h3>Top Categories</h3>
+
+        <div class="flex top">
+          <el-card
+            :body-style="{ padding: '0px' }"
+            shadow="hover"
+            style="margin-right: 25px"
+            v-for="o in 4"
+            :key="o"
+            class="top-img"
+          >
+            <img src="../images/1613872731202.png" class="top-image" />
+            <div style="padding: 14px">
+              <span class="card-title">Category</span>
+            </div>
+          </el-card>
+        </div>
       </div>
     </div>
   </div>
@@ -85,11 +106,29 @@ export default {
   /* height: 20%; */
   padding: 2%;
 }
+.top {
+  /* justify-content: space-between; */
+  margin-right: -1.6rem;
+}
+/* .top-img {
+  width: 80%;
+  height: 100%;
+} */
+.top-img {
+  width: 100%;
+  height: auto;
+}
+.top-image {
+  width: 100%;
+}
 
 @media only screen and (max-width: 600px) {
   .home-image {
     width: 100%;
     height: 150px;
+  }
+  .flex {
+    display: block;
   }
 }
 </style>

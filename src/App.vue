@@ -27,8 +27,8 @@ export default {
 }
 
 body {
-  /* background-color: #535353; */
-  background-color: var(--background);
+  background-color: #535353;
+  /* background-color: var(--background); */
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
@@ -124,12 +124,19 @@ body {
 .none {
   text-decoration: none;
 }
+.flex {
+  display: flex;
+}
+
 /* card */
 .card {
   /* width: 25%; */
   /* width: 10px; */
   transition: ease-in-out 0.3s;
   overflow: hidden;
+}
+.card-card {
+  width: 25%;
 }
 .card:hover {
   cursor: pointer;
@@ -146,7 +153,7 @@ body {
 
 /* product images in a catalog */
 .product-img {
-  /* width: 210px; */
+  /* width: 100%; */
   height: 160px;
   /* height: 1%; */
   transition: ease-in-out 0.6s;
