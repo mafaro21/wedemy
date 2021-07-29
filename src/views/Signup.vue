@@ -92,7 +92,7 @@ export default {
 
     // validation for email
     var checkEmail = (rule, value, callback) => {
-      let reg = /(^([0-9A-Za-z])[\w.-]+@{1}[\w]+\.{1}[\w]\S+)$/gi;
+      let reg = /(^[0-9A-Za-z][\w.-]+@[\w]+\.[\w]\S+\w)$/gi;
 
       if (!value) {
         return callback(new Error("E-mail can't be empty"));
@@ -105,13 +105,15 @@ export default {
 
     // validation for password
     var checkPassword = (rule, value, callback) => {
-      let reg = /[<>;&]/gi;
+     // let reg = /[<>;&]/gi; <-----------lets allow these characters in password
 
       if (!value) {
         callback(new Error("Password can't be empty"));
-      } else if (reg.test(this.signupForm.password)) {
-        callback(new Error("Password contains illegal characters"));
-      } else if (value.length < 6) {
+      }
+      //  else if (reg.test(this.signupForm.password)) {
+      //   callback(new Error("Password contains illegal characters"));
+      // } 
+      else if (value.length < 6) {
         return callback(
           new Error("Password should be atleast 6 characters long")
         );
