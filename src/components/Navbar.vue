@@ -133,6 +133,13 @@ export default {
   text-decoration: none;
   box-shadow: 0px 1px 3px grey;
 }
+
+.dropdown-menu {
+  font-family: system-ui, sans-serif;
+}
+el-dropdown-item{
+  font-family: system-ui, sans-serif;
+}
 .logo {
   font-size: 26px;
   font-weight: 800;

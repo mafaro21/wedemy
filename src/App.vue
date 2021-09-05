@@ -26,10 +26,6 @@ export default {
   padding: 0;
 }
 
-body {
-  background-color: #535353;
-  /* background-color: var(--background); */
-}
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap"); */
@@ -41,6 +37,12 @@ body {
   --dark: #26222b;
   --border: #cfcfcf;
 }
+
+body {
+  /* background-color: #535353; */
+  background-color: var(--background);
+}
+
 
 #app {
   font-family: "Public Sans", system-ui, sans-serif;

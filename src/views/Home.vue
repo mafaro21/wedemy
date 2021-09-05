@@ -1,4 +1,4 @@
-<template >
+  <template>
   <div class="wrapper">
     <img
       src="../images/al-ghazali.jpg"
@@ -12,44 +12,49 @@
       <h1>View some of our finest courses</h1>
 
       <div class="home-view" style="margin-top: 20px">
-        <h3>Learn this</h3>
-        <p>blah blah just buy it</p>
+        <h3>Recommended for you</h3>
+
+        <div class="server-error" v-if="serverError">Something went Wrong.</div>
 
         <!-- category catalog -->
         <router-link to="/course" style="text-decoration: none">
           <el-space
+            v-loading="loading"
             direction="vertical"
             alignment="start"
             :size="30"
             style="margin-top: 20px; margin-left: 20px"
           >
-            <el-space wrap :size="size">
-              <el-card
+            <el-space v-if="courses.length" wrap :size="size">
+              <el-card   
                 :body-style="{ padding: '0px' }"
                 shadow="hover"
                 style="margin-bottom: 13px"
-                v-for="o in 5"
-                :key="o"
+                v-for="course in courses"
+                :key="course.courseId"
               >
-                <img src="../images/1613872731202.png" class="product-img" />
+              
+                <img :src="course.thumbUrl" class="product-img" />
                 <div style="padding: 14px">
-                  <span class="card-title">Course name</span>
-                  <div class="card-author"><span>Course author</span></div>
+                  <div class="card-title">{{ course.title }}</div>
+                  <div class="card-author">
+                    <span>{{ course.author }}</span>
+                  </div>
                   <!-- rating from users -->
                   <el-rate
-                    v-model="value"
+                    v-model="course.rating"
                     disabled
                     show-score
                     text-color="#ff9900"
                     score-template="{value} points"
                   >
                   </el-rate>
-                  <div>$19.99</div>
-                </div>
+                  <div>${{ course.price }}</div>
+                </div>              
               </el-card>
             </el-space>
-          </el-space>
-        </router-link>
+          </el-space>  
+          </router-link>
       </div>
 
       <!-- top categories -->
@@ -77,17 +82,41 @@
 </template>
 
 <script lang="ts">
-export default {
+import axios from "axios";
+import { defineComponent } from "vue";
+export default defineComponent({
   name: "Home",
   data() {
     document.title = "Home | Wedemy";
 
     return {
       size: "large",
-      value: 4.7,
+      courses: [],
+      serverError: false,
+      loading: true,
+      baseURL: this.$baseURL,
     };
   },
-};
+  methods: {
+    fetchAllCourses() {
+      axios
+        .get(this.baseURL + "/courses/all")
+        .then((res) => {
+          this.courses = res.data;
+        })
+        .catch((error) => {
+          this.serverError = true;
+          console.error(error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
+  mounted() {
+    this.fetchAllCourses();
+  },
+});
 </script>
 
 <style>
@@ -121,6 +150,15 @@ export default {
 .top-image {
   width: 100%;
 }
+.card-title {
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.server-error{
+  color: red;
+}
 
 @media only screen and (max-width: 600px) {
   .home-image {
@@ -132,3 +170,4 @@ export default {
   }
 }
 </style>
+
