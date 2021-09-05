@@ -126,8 +126,6 @@ export default {
   border-top: 9px solid;
   border-top-color: #00ff29;
   padding: 9px 2% 9px 2%;
-  border-style: solid;
-  border-width: 9px 0px 0px 0px;
   /* border-image: linear-gradient(90deg, #102610 0%, #00ff29 100%); */
   border-bottom: 1px solid black;
   text-decoration: none;
@@ -137,9 +135,7 @@ export default {
 .dropdown-menu {
   font-family: system-ui, sans-serif;
 }
-el-dropdown-item{
-  font-family: system-ui, sans-serif;
-}
+
 .logo {
   font-size: 26px;
   font-weight: 800;
@@ -171,6 +167,9 @@ input {
 }
 input::placeholder {
   color: grey;
+}
+.el-dropdown-menu__item{
+  font-family: "Public Sans", system-ui, sans-serif;
 }
 .input-sidebar {
   width: 250px;

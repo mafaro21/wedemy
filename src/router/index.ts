@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/Category.vue")
     },
     {
-        path: "/course",
+        path: "/course/:id",
         name: "Course",
         component: () => import("../views/Course.vue")
     },
@@ -32,11 +32,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "Cart",
         component: () => import("../views/Cart.vue")
     },
-    // {
-    //     path: "/*",
-    //     name: "Not Found 404",
-    //     component: () => import("../views/NotFound404.vue")
-    // }
+    {
+        path: "/:pathMatch(.*)*",
+        name: "Not Found",
+        component: () => import("../views/NotFound404.vue")
+    }
 ];
 
 const router = createRouter({

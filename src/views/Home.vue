@@ -15,11 +15,10 @@
         <h3>Recommended for you</h3>
 
         <div class="server-error" v-if="serverError">Something went Wrong.</div>
-
+        <div v-loading="loading"></div>
         <!-- category catalog -->
         <router-link to="/course" style="text-decoration: none">
           <el-space
-            v-loading="loading"
             direction="vertical"
             alignment="start"
             :size="30"
