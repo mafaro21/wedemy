@@ -1,6 +1,6 @@
 <template >
   <div class="main-view login-view wrapper">
-    <h2>Login And Continue Learning!</h2>
+    <h2>Login to Continue Learning!</h2>
     <p style="color: red; margin-top: 10px; font-weight: 600">
       {{ loginError }}
     </p>
@@ -45,9 +45,12 @@
 </template>
 
 <script>
+
+
 export default {
   data() {
     document.title = "Login | Wedemy";
+  
 
     // validation for email
     var checkEmail = (rule, value, callback) => {
@@ -64,15 +67,12 @@ export default {
 
     // validation for password
     var checkPassword = (rule, value, callback) => {
-      let reg = /[<>;&]/gi;
 
       if (!value) {
         callback(new Error("Password can't be empty"));
-      } else if (reg.test(this.loginForm.password)) {
-        callback(new Error("Password contains illegal characters"));
-      } else if (value.length < 6) {
+      } else if (value.length < 8) {
         return callback(
-          new Error("Password should be atleast 6 characters long")
+          new Error("Password should be atleast 8 characters long")
         );
       } else {
         callback();
@@ -91,7 +91,7 @@ export default {
         password: [{ validator: checkPassword, trigger: "blur" }],
       },
 
-      //otehr
+      //other
       loginError: "",
     };
   },
@@ -102,7 +102,7 @@ export default {
         if (valid) {
           alert("submit!");
         } else {
-          this.loginError = "Some credentials haven't been met";
+          this.loginError = "Form cannot be submitted";
           return false;
         }
       });

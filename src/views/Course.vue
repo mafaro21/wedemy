@@ -1,37 +1,37 @@
 <template>
   <div class="wrapper main-view" style="margin-top: 24px">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/category' }"
-        >category</el-breadcrumb-item
-      >
-      <el-breadcrumb-item>course name</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/category' }"> 
+      {{singleCourse.category}} </el-breadcrumb-item>
+      <el-breadcrumb-item>{{singleCourse.title}}</el-breadcrumb-item>
     </el-breadcrumb>
 
+    <div style="color: red" v-if="errorMessage.length">{{ errorMessage }}</div>
     <div class="course-view" style="margin-top: 24px">
       <div class="course-preview">
         <img
-          src="../images/adeolu-eletu.jpg"
-          alt="course-thumbnail"
+          :src="singleCourse.thumbUrl"
+          :alt="singleCourse.title"
           class="course-thumbnail"
         />
       </div>
 
       <div class="course-details">
-        <h1>course name</h1>
-        <p style="font-size: 19px">course desription</p>
+        <h1>{{singleCourse.title}}</h1>
+        <p style="font-size: 19px">{{singleCourse.category}}</p>
         <p class="course-view" style="margin-top: 9px">
           <el-rate
-            v-model="value"
+            v-model="singleCourse.rating"
             disabled
             show-score
             text-color="#ff9900"
             score-template="{value} points"
           >
           </el-rate>
-          &nbsp; (x ratings)
+          &nbsp; (N ratings)
         </p>
-        <p>course author</p>
-        <p>$$$$$</p>
+        <p>{{singleCourse.author}}</p>
+        <h3>${{singleCourse.price}}</h3>
         <button class="btn btn-accent course-btn">Purchase</button>
         <button class="btn btn-accent2 course-btn" @click="cartNoti">
           Add to Cart
@@ -50,12 +50,15 @@
 </template>
 
 <script>
+import CourseService from "@/services/CourseService";
 export default {
   data() {
     document.title = "${course} | Wedemy";
     return {
-      value: 4.7,
       activeName: "first",
+      courseId: 0,
+      singleCourse: {},
+      errorMessage: "",
     };
   },
   methods: {
@@ -70,10 +73,25 @@ export default {
       });
     },
   },
+  mounted() {
+    window.scrollTo(0, 0);
+    this.courseId = this.$route.path.split(/course\//)[1];
+    CourseService.getById(this.courseId)
+      .then((res) => {
+        this.singleCourse = res.data;
+      })
+      .catch((error) => {
+
+      this.errorMessage = error.response.data.message;
+      });
+  },
 };
 </script>
 
 <style>
+.el-notification__content {
+  font-family: "Public Sans", system-ui, sans-serif;
+}
 .course-view {
   display: flex;
 }
