@@ -92,8 +92,7 @@ export default defineComponent({
       size: "large",
       courses: [],
       serverError: false,
-      loading: true,
-      baseURL: this.$baseURL,
+      loading: true
     };
   },
   methods: {

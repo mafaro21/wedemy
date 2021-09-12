@@ -28,7 +28,7 @@
       </el-input>
 
       <!-- side login/signup buttons -->
-      <el-row type="flex" justify="space-around" style="margin-top: 10px">
+      <el-row v-if="!loggedIn" type="flex" justify="space-around" style="margin-top: 10px">
         <router-link to="/login" class="none">
           <button class="btn btn-accent">Log In</button>
         </router-link>
@@ -49,6 +49,7 @@ export default {
     return {
       drawer: false,
       direction: "ltr",
+      loggedIn: false
     };
   },
 };

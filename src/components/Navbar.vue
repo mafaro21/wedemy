@@ -65,47 +65,48 @@
     <!-- log in/ sign up buttons -->
     <div class="">
       <!-- buttons if user is not logged in -->
-      <router-link to="/login" class="none main-only">
-        <button class="btn btn-accent">Log In</button>
-      </router-link>
+      <div v-if="!loggedIn">
+        <router-link to="/login" class="none main-only">
+          <button class="btn btn-accent">Log In</button>
+        </router-link>
 
-      <router-link to="/signup" class="none main-only">
-        <button class="btn btn-accent-outline">Sign Up</button>
-      </router-link>
+        <router-link to="/signup" class="none main-only">
+          <button class="btn btn-accent-outline">Sign Up</button>
+        </router-link>
+      </div>
+      
 
-      <!-- username if logged in -->
-
-      <!-- <div
+      <div
         class="main-only"
         :style="{ textDecoration: 'none', display: 'flex' }"
       >
-        <el-dropdown>
+      <!-- show if logged in -->
+        <el-dropdown v-if="loggedIn">
           <el-avatar
             :size="36"
             style="margin-top: 1px"
-            src="https://avatars.dicebear.com/api/initials/pogchamp79.svg"
+            :src="attachAvatarLink(username)"
           ></el-avatar>
           <span class="el-dropdown-link" style="font-size: 16px"> </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>pogchamp79</el-dropdown-item>
-              <router-link to="/category"
-                ><el-dropdown-item divided>My Account</el-dropdown-item>
-              </router-link>
-              <el-dropdown-item>My Courses</el-dropdown-item>
+              <el-dropdown-item disabled>{{ username }}</el-dropdown-item>
+              <el-dropdown-item divided>My Account</el-dropdown-item>
+              <el-dropdown-item>Logout</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div> -->
+      </div>
     </div>
   </el-row>
 </template>
 
 <script lang="ts">
 // import { ref } from "vue";
+import { defineComponent } from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
 
-export default {
+export default defineComponent({
   name: "Navbar",
   components: {
     Drawer,
@@ -114,9 +115,16 @@ export default {
   data() {
     return {
       search: "",
+      loggedIn: false,
+      username: "Anna",
     };
   },
-};
+  methods: {
+    attachAvatarLink: (username: string): string => {
+      return `https://avatars.dicebear.com/api/initials/${username}.svg`;
+    },
+  },
+});
 </script>
 
 <style>
@@ -168,7 +176,7 @@ input {
 input::placeholder {
   color: grey;
 }
-.el-dropdown-menu__item{
+.el-dropdown-menu__item {
   font-family: "Public Sans", system-ui, sans-serif;
 }
 .input-sidebar {
