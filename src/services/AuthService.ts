@@ -1,5 +1,4 @@
 import axios from "axios";
-import http from "../axiosconfig";
 
 class AuthService {
     loginUser(email: string, password: string) {
@@ -12,7 +11,8 @@ class AuthService {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            withCredentials: true
+            withCredentials: true,
+        
         };
 
         return axios.post(url, params, options);

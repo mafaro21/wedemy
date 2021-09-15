@@ -18,7 +18,7 @@
           :key="o"
           class="card"
         >
-          <img src="../images/1613872731202.png" class="product-img" />
+          <img src="../images/1613872731202.webp" class="product-img" />
           <div style="padding: 14px">
             <span class="card-title">Course name</span>
             <div class="card-author"><span>Course author</span></div>

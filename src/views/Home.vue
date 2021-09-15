@@ -69,7 +69,7 @@
             :key="o"
             class="top-img"
           >
-            <img src="../images/1613872731202.png" class="top-image" />
+            <img src="../images/1613872731202.webp" class="top-image" />
             <div style="padding: 14px">
               <span class="card-title">Category</span>
             </div>

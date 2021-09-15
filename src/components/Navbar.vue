@@ -120,7 +120,7 @@ export default defineComponent({
     };
   },
   methods: {
-    attachAvatarLink: (username: string): string => {
+    attachAvatarLink: (username: string) => {
       return `https://avatars.dicebear.com/api/initials/${username}.svg`;
     },
   },
@@ -146,14 +146,15 @@ export default defineComponent({
 
 .logo {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: #262a34;
   transition: ease-in-out 0.26s;
   font-family: "Leckerli One", cursive;
 }
+
 .icon {
   width: 34px;
-  height: 32px;
+  height: 34px;
 }
 .nav-icon:hover,
 .cart:hover {

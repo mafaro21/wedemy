@@ -8,39 +8,41 @@
     <el-form status-icon :model="loginForm" :rules="rules" ref="loginForm">
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
-            placeholder="E-mail"
-            v-model="loginForm.email"
-            class="field"
-            clearable
+          placeholder="E-mail"
+          v-model="loginForm.email"
+          class="field"
+          clearable
         ></el-input>
       </el-form-item>
 
       <el-form-item prop="password">
         <el-input
-            placeholder="Password"
-            v-model="loginForm.password"
-            class="field"
-            show-password
+          placeholder="Password"
+          v-model="loginForm.password"
+          class="field"
+          show-password
         ></el-input>
       </el-form-item>
 
       <div style="margin-top: 8px">
-        <button
-            class="btn-accent field login-btn"
-            @click="handleLogin('loginForm')"
-            style="font-weight: 600"
+        <el-button
+          plain
+          class="btn-accent field login-btn"
+          @click="handleLogin('loginForm')"
+          style="font-weight: 600"
+          type="success"
+          :loading="isLoading"
         >
           Log In
-        </button>
+        </el-button>
       </div>
     </el-form>
 
     <div style="margin-top: 13px">
       Don't have an account?
       <router-link to="/signup" class="none" :style="{ fontWeight: '800' }"
-      >SignUp
-      </router-link
-      >
+        >SignUp
+      </router-link>
     </div>
   </div>
 </template>
@@ -50,7 +52,6 @@ import AuthService from "@/services/AuthService";
 export default {
   data() {
     document.title = "Login | Wedemy";
-
 
     // validation for email
     const checkEmail = (rule, value, callback) => {
@@ -82,12 +83,13 @@ export default {
 
       // rules for the validation
       rules: {
-        email: [{validator: checkEmail, trigger: "blur"}],
-        password: [{validator: checkPassword, trigger: "blur"}],
+        email: [{ validator: checkEmail, trigger: "blur" }],
+        password: [{ validator: checkPassword, trigger: "blur" }],
       },
 
       //other
       loginError: "",
+      isLoading: false,
     };
   },
 
@@ -95,7 +97,11 @@ export default {
     handleLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.SubmitLoginToServer(this.loginForm.password, this.loginForm.email);
+          this.isLoading = true;
+          this.SubmitLoginToServer(
+            this.loginForm.email,
+            this.loginForm.password
+          ).finally(() => (this.isLoading = false));
         } else {
           this.loginError = "Form cannot be submitted";
           return false;
@@ -105,7 +111,7 @@ export default {
     SubmitLoginToServer: async (email, password) => {
       const response = await AuthService.loginUser(email, password);
       console.log(JSON.stringify(response));
-    }
+    },
   },
 };
 </script>

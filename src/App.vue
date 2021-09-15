@@ -27,7 +27,7 @@ export default {
 }
 
 
-@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap"); */
 /* @import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap"); */
 
 :root {

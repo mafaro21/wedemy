@@ -16,6 +16,7 @@ app.use(ElementPlus);
 app.use(ref);
 
 app.config.globalProperties.$baseURL = "http://localhost:9000";
+app.config.performance = true;
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
