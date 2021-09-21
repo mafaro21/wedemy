@@ -9,7 +9,7 @@
       <el-form-item style="margin-top: 8px" prop="name">
         <el-input
           placeholder="Name"
-          v-model="signupForm.name"
+          v-model.trim="signupForm.name"
           class="field"
           clearable
         ></el-input>
@@ -18,7 +18,7 @@
       <el-form-item prop="email">
         <el-input
           placeholder="E-mail"
-          v-model="signupForm.email"
+          v-model.trim="signupForm.email"
           class="field"
           type="email"
           clearable
@@ -29,16 +29,16 @@
         <el-input
           type="password"
           placeholder="Password"
-          v-model="signupForm.password"
+          v-model.trim="signupForm.password"
           class="field"
           show-password
         ></el-input>
       </el-form-item>
 
-      <el-form-item prop="reenterpass">
+      <el-form-item prop="confirmPass">
         <el-input
           placeholder="Re-Enter Password"
-          v-model="signupForm.reenterpass"
+          v-model.trim="signupForm.confirmPass"
           class="field"
           show-password
         ></el-input>
@@ -113,9 +113,9 @@ export default {
       //  else if (reg.test(this.signupForm.password)) {
       //   callback(new Error("Password contains illegal characters"));
       // } 
-      else if (value.length < 6) {
+      else if (value.length < 8) {
         return callback(
-          new Error("Password should be atleast 6 characters long")
+          new Error("Password should be atleast 8 characters long")
         );
       } else {
         callback();
@@ -139,7 +139,7 @@ export default {
         name: "",
         email: "",
         password: "",
-        reenterpass: "",
+        confirmPass: "",
       },
 
       // rules for the validation
@@ -147,7 +147,7 @@ export default {
         name: [{ validator: checkName, trigger: "blur" }],
         email: [{ validator: checkEmail, trigger: "blur" }],
         password: [{ validator: checkPassword, trigger: "blur" }],
-        reenterpass: [{ validator: checkReenter, trigger: "blur" }],
+        confirmPass: [{ validator: checkReenter, trigger: "blur" }],
       },
 
       //other
@@ -161,7 +161,7 @@ export default {
         if (valid) {
           alert("submit!");
         } else {
-          this.signupError = "Some credentials haven't been met";
+          this.signupError = "Form cannot be submitted";
           return false;
         }
       });

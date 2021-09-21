@@ -1,21 +1,27 @@
 import axios from "axios";
+import http from '../axiosconfig';
 
 class AuthService {
     loginUser(email: string, password: string) {
-        let params = new URLSearchParams();
-        params.append("email", email);
-        params.append("password", password);
-        const url = "http://localhost:9000/login";
+        const url = "http://localhost:9000/auth/statuslogin";
 
         const options = {
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest"
             },
             withCredentials: true,
-        
+            auth: {
+                username: email,
+                password: password
+            }       
         };
 
-        return axios.post(url, params, options);
+        return axios.post(url, null, options);
+    }
+
+    logoutUser() {
+        return http.post("/logout")
     }
 }
 

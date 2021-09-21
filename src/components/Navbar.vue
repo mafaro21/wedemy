@@ -74,13 +74,12 @@
           <button class="btn btn-accent-outline">Sign Up</button>
         </router-link>
       </div>
-      
 
       <div
         class="main-only"
         :style="{ textDecoration: 'none', display: 'flex' }"
       >
-      <!-- show if logged in -->
+        <!-- show if logged in -->
         <el-dropdown v-if="loggedIn">
           <el-avatar
             :size="36"

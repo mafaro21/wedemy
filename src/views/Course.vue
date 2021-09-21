@@ -81,7 +81,6 @@ export default {
         this.singleCourse = res.data;
       })
       .catch((error) => {
-
       this.errorMessage = error.response.data.message;
       });
   },

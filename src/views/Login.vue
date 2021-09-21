@@ -9,7 +9,7 @@
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
           placeholder="E-mail"
-          v-model="loginForm.email"
+          v-model.trim="loginForm.email"
           class="field"
           clearable
         ></el-input>
@@ -18,7 +18,7 @@
       <el-form-item prop="password">
         <el-input
           placeholder="Password"
-          v-model="loginForm.password"
+          v-model.trim="loginForm.password"
           class="field"
           show-password
         ></el-input>
@@ -98,7 +98,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLoading = true;
-          this.SubmitLoginToServer(
+          this.submitToServer(
             this.loginForm.email,
             this.loginForm.password
           ).finally(() => (this.isLoading = false));
@@ -108,9 +108,14 @@ export default {
         }
       });
     },
-    SubmitLoginToServer: async (email, password) => {
-      const response = await AuthService.loginUser(email, password);
-      console.log(JSON.stringify(response));
+    submitToServer: async (email, password) => {
+      try {
+        const response = await AuthService.loginUser(email, password);
+        //TODO commit to vuex
+        console.log(JSON.stringify(response));
+      } catch (error) {
+        console.error(JSON.stringify(error));
+      }
     },
   },
 };
