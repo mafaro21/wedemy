@@ -98,24 +98,18 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLoading = true;
-          this.submitToServer(
-            this.loginForm.email,
-            this.loginForm.password
-          ).finally(() => (this.isLoading = false));
+          this.submitToServer(this.loginForm)
+            .catch((error) => {
+              this.loginError = error.message;
+            })
+            .finally(() => (this.isLoading = false));
         } else {
-          this.loginError = "Form cannot be submitted";
           return false;
         }
       });
     },
-    submitToServer: async (email, password) => {
-      try {
-        const response = await AuthService.loginUser(email, password);
-        //TODO commit to vuex
-        console.log(JSON.stringify(response));
-      } catch (error) {
-        console.error(JSON.stringify(error));
-      }
+    submitToServer: async (load) => {
+      await AuthService.loginUser(load.email, load.password);
     },
   },
 };

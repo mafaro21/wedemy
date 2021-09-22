@@ -161,6 +161,10 @@ export default defineComponent({
   color: red;
 }
 
+div.el-card__body{
+  width: 306px;
+}
+
 @media only screen and (max-width: 600px) {
   .home-image {
     width: 100%;

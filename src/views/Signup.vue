@@ -6,10 +6,10 @@
     </p>
 
     <el-form status-icon :model="signupForm" :rules="rules" ref="signupForm">
-      <el-form-item style="margin-top: 8px" prop="name">
+      <el-form-item style="margin-top: 8px" prop="fullname">
         <el-input
           placeholder="Name"
-          v-model.trim="signupForm.name"
+          v-model.trim="signupForm.fullname"
           class="field"
           clearable
         ></el-input>
@@ -45,13 +45,16 @@
       </el-form-item>
 
       <el-form-item style="margin-top: 8px">
-        <button
+        <el-button
+          plain
           class="btn-accent field login-btn"
-          @click="handleSignup('signupForm')"
+          @click="handleSignup(signupForm)"
           style="font-weight: 600"
+          type="success"
+          :loading="isLoading"
         >
           Sign Up
-        </button>
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -66,15 +69,16 @@
 
 
 <script >
+import AuthService from "@/services/AuthService";
 // import { ref } from "vue";
 
 export default {
   data() {
     document.title = "Signup | Wedemy";
 
-    // validation for name
+    /* validation for fullname */
     var checkName = (rule, value, callback) => {
-      let reg = /[^0-9A-Za-z_.]/gi;
+      let reg = /[^ 0-9A-Za-z_.]/gi;
 
       if (!value) {
         return callback(new Error("Name can't be empty"));
@@ -82,7 +86,7 @@ export default {
       setTimeout(() => {
         if (value.length < 4) {
           callback(new Error("Name less than 4 characters"));
-        } else if (reg.test(this.signupForm.name)) {
+        } else if (reg.test(this.signupForm.fullname)) {
           callback(new Error("Name contains illegal characters"));
         } else {
           callback();
@@ -105,14 +109,14 @@ export default {
 
     // validation for password
     var checkPassword = (rule, value, callback) => {
-     // let reg = /[<>;&]/gi; <-----------lets allow these characters in password
+      // let reg = /[<>;&]/gi; <-----------lets allow these characters in password
 
       if (!value) {
         callback(new Error("Password can't be empty"));
       }
       //  else if (reg.test(this.signupForm.password)) {
       //   callback(new Error("Password contains illegal characters"));
-      // } 
+      // }
       else if (value.length < 8) {
         return callback(
           new Error("Password should be atleast 8 characters long")
@@ -136,7 +140,7 @@ export default {
 
     return {
       signupForm: {
-        name: "",
+        fullname: "",
         email: "",
         password: "",
         confirmPass: "",
@@ -144,7 +148,7 @@ export default {
 
       // rules for the validation
       rules: {
-        name: [{ validator: checkName, trigger: "blur" }],
+        fullname: [{ validator: checkName, trigger: "blur" }],
         email: [{ validator: checkEmail, trigger: "blur" }],
         password: [{ validator: checkPassword, trigger: "blur" }],
         confirmPass: [{ validator: checkReenter, trigger: "blur" }],
@@ -152,6 +156,7 @@ export default {
 
       //other
       signupError: "",
+      isLoading: false,
     };
   },
 
@@ -159,12 +164,23 @@ export default {
     handleSignup(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.submitToServer(this.signupForm)
+            .catch((error) => {
+              this.signupError = error.message;
+            })
+            .finally(() => (this.isLoading = false));
         } else {
-          this.signupError = "Form cannot be submitted";
           return false;
         }
       });
+    },
+    submitToServer: async (load) => {
+      await AuthService.registerUser(
+        load.email,
+        load.fullname,
+        load.password,
+        load.confirmPass
+      );
     },
   },
 };

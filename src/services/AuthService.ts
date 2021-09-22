@@ -14,7 +14,7 @@ class AuthService {
             auth: {
                 username: email,
                 password: password
-            }       
+            }
         };
 
         return axios.post(url, null, options);
@@ -22,6 +22,16 @@ class AuthService {
 
     logoutUser() {
         return http.post("/logout")
+    }
+
+
+    registerUser(email: string, fullname: string, password: string, confirmPass: string) {
+        return http.post("/auth/register", {
+            fullname,
+            email,
+            password,
+            confirmPass
+        })
     }
 }
 
