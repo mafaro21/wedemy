@@ -17,43 +17,44 @@
         <div class="server-error" v-if="serverError">Something went Wrong.</div>
         <div v-loading="loading"></div>
         <!-- category catalog -->
-        <router-link to="/course" style="text-decoration: none">
-          <el-space
-            direction="vertical"
-            alignment="start"
-            :size="30"
-            style="margin-top: 20px; margin-left: 20px"
-          >
-            <el-space v-if="courses.length" wrap :size="size">
-              <el-card   
-                :body-style="{ padding: '0px' }"
-                shadow="hover"
-                style="margin-bottom: 13px"
-                v-for="course in courses"
-                :key="course.courseId"
-              >
-              
-                <img :src="course.thumbUrl" class="product-img" />
-                <div style="padding: 14px">
-                  <div class="card-title">{{ course.title }}</div>
-                  <div class="card-author">
-                    <span>{{ course.author }}</span>
-                  </div>
-                  <!-- rating from users -->
-                  <el-rate
-                    v-model="course.rating"
-                    disabled
-                    show-score
-                    text-color="#ff9900"
-                    score-template="{value} points"
-                  >
-                  </el-rate>
-                  <div>${{ course.price }}</div>
-                </div>              
-              </el-card>
-            </el-space>
-          </el-space>  
-          </router-link>
+        <!-- <router-link to="/course" style="text-decoration: none"> -->
+        <el-space
+          direction="vertical"
+          alignment="start"
+          :size="30"
+          style="margin-top: 20px; margin-left: 20px"
+        >
+          <el-space v-if="courses.length" wrap :size="size">
+            <el-card
+              class="courseCard"
+              :body-style="{ padding: '0px' }"
+              shadow="hover"
+              style="margin-bottom: 13px"
+              v-for="course in courses"
+              :key="course.courseId"
+              @click="goToCourse(course.courseId)"
+            >
+              <img :src="course.thumbUrl" class="product-img" />
+              <div style="padding: 14px">
+                <div class="card-title">{{ course.title }}</div>
+                <div class="card-author">
+                  <span>{{ course.author }}</span>
+                </div>
+                <!-- rating from users -->
+                <el-rate
+                  v-model="course.rating"
+                  disabled
+                  show-score
+                  text-color="#ff9900"
+                  score-template="{value} points"
+                >
+                </el-rate>
+                <div>${{ course.price }}</div>
+              </div>
+            </el-card>
+          </el-space>
+        </el-space>
+        <!-- </router-link> -->
       </div>
 
       <!-- top categories -->
@@ -69,7 +70,7 @@
             :key="o"
             class="top-img"
           >
-            <img src="../images/1613872731202.png" class="top-image" />
+            <img src="../images/1613872731202.webp" class="top-image" />
             <div style="padding: 14px">
               <span class="card-title">Category</span>
             </div>
@@ -81,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import CourseService from "../services/CourseService";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Home",
@@ -93,13 +94,11 @@ export default defineComponent({
       courses: [],
       serverError: false,
       loading: true,
-      baseURL: this.$baseURL,
     };
   },
   methods: {
     fetchAllCourses() {
-      axios
-        .get(this.baseURL + "/courses/all")
+      CourseService.getAll()
         .then((res) => {
           this.courses = res.data;
         })
@@ -110,6 +109,11 @@ export default defineComponent({
         .finally(() => {
           this.loading = false;
         });
+    },
+    goToCourse(courseId: number) {
+      this.$router
+        .push(`/course/${courseId}`)
+        .catch((error) => console.error(error));
     },
   },
   mounted() {
@@ -155,8 +159,16 @@ export default defineComponent({
   word-break: break-all;
 }
 
-.server-error{
+.server-error {
   color: red;
+}
+
+/* div.el-card__body {
+  width: 306px;
+} */
+
+.courseCard{
+  width: 284px;
 }
 
 @media only screen and (max-width: 600px) {

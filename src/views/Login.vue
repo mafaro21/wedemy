@@ -1,6 +1,6 @@
-<template >
+<template>
   <div class="main-view login-view wrapper">
-    <h2>Login And Continue Learning!</h2>
+    <h2>Login to Continue Learning!</h2>
     <p style="color: red; margin-top: 10px; font-weight: 600">
       {{ loginError }}
     </p>
@@ -9,7 +9,7 @@
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
           placeholder="E-mail"
-          v-model="loginForm.email"
+          v-model.trim="loginForm.email"
           class="field"
           clearable
         ></el-input>
@@ -18,40 +18,44 @@
       <el-form-item prop="password">
         <el-input
           placeholder="Password"
-          v-model="loginForm.password"
+          v-model.trim="loginForm.password"
           class="field"
           show-password
         ></el-input>
       </el-form-item>
 
       <div style="margin-top: 8px">
-        <button
+        <el-button
+          plain
           class="btn-accent field login-btn"
           @click="handleLogin('loginForm')"
           style="font-weight: 600"
+          type="success"
+          :loading="isLoading"
         >
           Log In
-        </button>
+        </el-button>
       </div>
     </el-form>
 
     <div style="margin-top: 13px">
       Don't have an account?
       <router-link to="/signup" class="none" :style="{ fontWeight: '800' }"
-        >SignUp</router-link
-      >
+        >SignUp
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import AuthService from "@/services/AuthService";
 export default {
   data() {
     document.title = "Login | Wedemy";
 
     // validation for email
-    var checkEmail = (rule, value, callback) => {
-      let reg = /(^([0-9A-Za-z])[\w.-]+@{1}[\w]+\.{1}[\w]\S+)$/gi;
+    const checkEmail = (rule, value, callback) => {
+      let reg = /(^[0-9A-Za-z][\w.-]+@[\w]+\.[\w]\S+\w)$/gi;
 
       if (!value) {
         return callback(new Error("E-mail can't be empty"));
@@ -63,17 +67,9 @@ export default {
     };
 
     // validation for password
-    var checkPassword = (rule, value, callback) => {
-      let reg = /[<>;&]/gi;
-
+    const checkPassword = (rule, value, callback) => {
       if (!value) {
         callback(new Error("Password can't be empty"));
-      } else if (reg.test(this.loginForm.password)) {
-        callback(new Error("Password contains illegal characters"));
-      } else if (value.length < 6) {
-        return callback(
-          new Error("Password should be atleast 6 characters long")
-        );
       } else {
         callback();
       }
@@ -91,8 +87,9 @@ export default {
         password: [{ validator: checkPassword, trigger: "blur" }],
       },
 
-      //otehr
+      //other
       loginError: "",
+      isLoading: false,
     };
   },
 
@@ -100,16 +97,23 @@ export default {
     handleLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.isLoading = true;
+          this.submitToServer(this.loginForm)
+            .catch((error) => {
+              this.loginError = error.message;
+            })
+            .finally(() => (this.isLoading = false));
         } else {
-          this.loginError = "Some credentials haven't been met";
           return false;
         }
       });
+    },
+    submitToServer: async (load) => {
+      await AuthService.loginUser(load.email, load.password);
     },
   },
 };
 </script>
 
-<style >
+<style>
 </style>

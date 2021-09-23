@@ -20,7 +20,8 @@
     >
       <el-dropdown>
         <span class="el-dropdown-link">
-          Categories<i class="el-icon-arrow-down el-icon--right"></i>
+          Categories
+          <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -54,58 +55,58 @@
     </div>
 
     <!-- cart icon if signed in -->
-    <!-- <div style="margin-top: 6px" class="main-only">
-      <el-badge :value="12" class="item">
+    <div v-if="loggedIn" style="margin-top: 6px" class="main-only">
+      <el-badge :value="cartCount" class="item">
         <router-link to="/cart">
-          <font-awesome-icon :icon="['fas', 'shopping-cart']" class="cart" />
+          <font-awesome-icon :icon="['fas', 'shopping-cart']" size="lg" class="cart" />
         </router-link>
       </el-badge>
-    </div> -->
+    </div>
 
     <!-- log in/ sign up buttons -->
     <div class="">
       <!-- buttons if user is not logged in -->
-      <router-link to="/login" class="none main-only">
-        <button class="btn btn-accent">Log In</button>
-      </router-link>
+      <div v-if="!loggedIn">
+        <router-link to="/login" class="none main-only">
+          <button class="btn btn-accent">Log In</button>
+        </router-link>
 
-      <router-link to="/signup" class="none main-only">
-        <button class="btn btn-accent-outline">Sign Up</button>
-      </router-link>
+        <router-link to="/signup" class="none main-only">
+          <button class="btn btn-accent-outline" style="margin-left: 0.75em">Sign Up</button>
+        </router-link>
+      </div>
 
-      <!-- username if logged in -->
-
-      <!-- <div
+      <div
         class="main-only"
         :style="{ textDecoration: 'none', display: 'flex' }"
       >
-        <el-dropdown>
+        <!-- show if logged in -->
+        <el-dropdown v-if="loggedIn">
           <el-avatar
             :size="36"
             style="margin-top: 1px"
-            src="https://avatars.dicebear.com/api/initials/pogchamp79.svg"
+            :src="attachAvatarLink(username)"
           ></el-avatar>
           <span class="el-dropdown-link" style="font-size: 16px"> </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>pogchamp79</el-dropdown-item>
-              <router-link to="/category"
-                ><el-dropdown-item divided>My Account</el-dropdown-item>
-              </router-link>
-              <el-dropdown-item>My Courses</el-dropdown-item>
+              <el-dropdown-item disabled>{{ username }}</el-dropdown-item>
+              <el-dropdown-item divided>My Account</el-dropdown-item>
+              <el-dropdown-item>Logout</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div> -->
+      </div>
     </div>
   </el-row>
 </template>
 
 <script lang="ts">
 // import { ref } from "vue";
+import { defineComponent } from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
 
-export default {
+export default defineComponent({
   name: "Navbar",
   components: {
     Drawer,
@@ -114,9 +115,17 @@ export default {
   data() {
     return {
       search: "",
+      loggedIn: false,
+      username: "Anna",
+      cartCount: 0
     };
   },
-};
+  methods: {
+    attachAvatarLink: (username: string) => {
+      return `https://avatars.dicebear.com/api/initials/${username}.svg`;
+    },
+  },
+});
 </script>
 
 <style>
@@ -138,14 +147,15 @@ export default {
 
 .logo {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: #262a34;
   transition: ease-in-out 0.26s;
   font-family: "Leckerli One", cursive;
 }
+
 .icon {
   width: 34px;
-  height: 32px;
+  height: 34px;
 }
 .nav-icon:hover,
 .cart:hover {
@@ -168,7 +178,7 @@ input {
 input::placeholder {
   color: grey;
 }
-.el-dropdown-menu__item{
+.el-dropdown-menu__item {
   font-family: "Public Sans", system-ui, sans-serif;
 }
 .input-sidebar {
