@@ -26,6 +26,7 @@
         >
           <el-space v-if="courses.length" wrap :size="size">
             <el-card
+              class="courseCard"
               :body-style="{ padding: '0px' }"
               shadow="hover"
               style="margin-bottom: 13px"
@@ -92,12 +93,13 @@ export default defineComponent({
       size: "large",
       courses: [],
       serverError: false,
-      loading: true
+      loading: true,
     };
   },
   methods: {
     fetchAllCourses() {
-      CourseService.getAll().then((res) => {
+      CourseService.getAll()
+        .then((res) => {
           this.courses = res.data;
         })
         .catch((error) => {
@@ -161,8 +163,12 @@ export default defineComponent({
   color: red;
 }
 
-div.el-card__body{
+/* div.el-card__body {
   width: 306px;
+} */
+
+.courseCard{
+  width: 284px;
 }
 
 @media only screen and (max-width: 600px) {

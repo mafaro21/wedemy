@@ -20,7 +20,8 @@
     >
       <el-dropdown>
         <span class="el-dropdown-link">
-          Categories<i class="el-icon-arrow-down el-icon--right"></i>
+          Categories
+          <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -54,13 +55,13 @@
     </div>
 
     <!-- cart icon if signed in -->
-    <!-- <div style="margin-top: 6px" class="main-only">
-      <el-badge :value="12" class="item">
+    <div v-if="loggedIn" style="margin-top: 6px" class="main-only">
+      <el-badge :value="cartCount" class="item">
         <router-link to="/cart">
-          <font-awesome-icon :icon="['fas', 'shopping-cart']" class="cart" />
+          <font-awesome-icon :icon="['fas', 'shopping-cart']" size="lg" class="cart" />
         </router-link>
       </el-badge>
-    </div> -->
+    </div>
 
     <!-- log in/ sign up buttons -->
     <div class="">
@@ -71,7 +72,7 @@
         </router-link>
 
         <router-link to="/signup" class="none main-only">
-          <button class="btn btn-accent-outline">Sign Up</button>
+          <button class="btn btn-accent-outline" style="margin-left: 0.75em">Sign Up</button>
         </router-link>
       </div>
 
@@ -116,6 +117,7 @@ export default defineComponent({
       search: "",
       loggedIn: false,
       username: "Anna",
+      cartCount: 0
     };
   },
   methods: {
