@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper main-view" style="margin-top: 24px">
+  <div v-loading.fullscreen.lock="isLoading" class="wrapper main-view" style="margin-top: 24px">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/category' }">
         {{ singleCourse.category }}
@@ -8,11 +8,9 @@
     </el-breadcrumb>
 
     <div style="color: red" v-if="errorMessage.length">{{ errorMessage }}</div>
-    <div
-      v-if="!errorMessage.length"
-      class="course-view"
-      style="margin-top: 24px"
-    >
+    
+    <!-- START SINGLE COUSE -->
+    <div v-if="!errorMessage.length" class="course-view" style="margin-top: 24px">
       <div class="course-preview">
         <img
           :src="singleCourse.thumbUrl"
@@ -30,10 +28,10 @@
             disabled
             show-score
             text-color="#ff9900"
-            score-template="{value} points"
+            score-template="{value} rating"
           >
           </el-rate>
-          &nbsp; (N ratings)
+          <!-- &nbsp; (N ratings) -->
         </p>
         <p>{{ singleCourse.author }}</p>
         <h3>${{ singleCourse.price }}</h3>
@@ -43,7 +41,7 @@
         <el-button
           type="danger"
           class="course-btn"
-          @click="addToWishlist()"
+          @click="addToWishlist(singleCourse.courseId)"
           :icon="wishlisted ? 'el-icon-star-on' : 'el-icon-star-off'"
           plain
         >
@@ -51,12 +49,13 @@
         </el-button>
       </div>
     </div>
+    <!-- END SINGLE COURSE -->
 
     <div style="margin-top: 19px">
       <el-tabs v-model="activeName">
-        <el-tab-pane label="What you'll learn" name="first">User</el-tab-pane>
-        <el-tab-pane label="Content" name="second">Config</el-tab-pane>
-        <el-tab-pane label="Reviews" name="third">Role</el-tab-pane>
+        <el-tab-pane label="What you'll learn" name="first">Description</el-tab-pane>
+        <el-tab-pane label="Content" name="second">List of lessons</el-tab-pane>
+        <el-tab-pane label="Reviews" name="third">review cards</el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -75,6 +74,7 @@ export default defineComponent({
       courseId: 0,
       errorMessage: "",
       wishlisted: false,
+      isLoading: true,
       singleCourse: {
         title: "",
         price: 0,
@@ -93,22 +93,22 @@ export default defineComponent({
         duration: 2500,
       });
     },
-    addToWishlist() {
+    addToWishlist(courseId: number) {
       this.wishlisted = !this.wishlisted;
       //TODO add wishlist code here
     },
   },
   mounted() {
     window.scrollTo(0, 0);
-    this.courseId = parseInt(this.$route.path.split(/course\//)[1], 10);
+    this.courseId = parseInt(this.$route.path.split(/course\//)[1]);
     CourseService.getById(this.courseId)
       .then((res) => {
         this.singleCourse = res.data;
         document.title = this.singleCourse.title + " | Wedemy";
       })
       .catch((error) => {
-        this.errorMessage = error.response.data.message;
-      });
+        this.errorMessage = error.message;
+      }).finally(() => this.isLoading = false);
   },
 });
 </script>
@@ -119,6 +119,7 @@ export default defineComponent({
 }
 .course-view {
   display: flex;
+  flex-direction: row;
 }
 .course-preview {
   float: left;
@@ -132,19 +133,19 @@ export default defineComponent({
   width: 100%;
 }
 .course-btn {
-  width: 30%;
+  width: 10em;
   margin-top: 10px;
 }
 
 @media only screen and (max-width: 600px) {
   .course-thumbnail {
-    width: 90vw;
+    width: 95vw;
     align-self: center;
     margin: 0px auto;
   }
 
-  .course-details {
-    display: none;
+  .course-view {
+    flex-direction: column;
   }
 }
 </style>

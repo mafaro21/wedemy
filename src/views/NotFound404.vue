@@ -1,8 +1,11 @@
 <template>
   <div class="widescreen">
-    <h1 style="color: black; margin-top: 50px">404 eRr0r</h1>
-    <h2 style="color: black">Hmm, You seem to be lost. &#9785;</h2>
-    <el-button type="success" @click="goHome()">Go Home?</el-button>
+    <h1 style="color: black; margin-top: 50px">¯\_(ツ)_/¯</h1>
+    <h1 style="color: black; margin-top: 50px">Error 404</h1>
+    <h2 style="color: black">Hmm, You seem to be lost.</h2>
+    <router-link to="/" replace>
+      <el-button type="success">Go Home?</el-button>
+    </router-link>
   </div>
 </template>
 <script>
@@ -11,11 +14,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    goHome() {
-      this.$router.replace("/");
-    },
-  },
+  methods: {},
 };
 </script>
 <style>
@@ -25,5 +24,4 @@ export default {
   width: 90%;
   height: 70vh;
 }
-
 </style>

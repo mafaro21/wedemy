@@ -1,8 +1,8 @@
 <template id="app">
   <!-- <el-scrollbar height="400px" > -->
-  <Navbar />
+  <Navbar v-if="!this.$route.meta.hideNavbar" />
   <router-view />
-  <Footer />
+  <Footer v-if="!this.$route.meta.hideNavbar" />
   <!-- </el-scrollbar> -->
 </template>
 
@@ -49,6 +49,7 @@ body {
   max-width: 100vw;
   /* margin-bottom: 90px; */
 }
+
 .wrapper {
   min-height: 91vh;
   margin-bottom: 90px;
@@ -149,6 +150,7 @@ body {
   font-size: 14px;
 }
 
+
 /* product images in a catalog */
 .product-img {
   /* width: 100%; */
@@ -173,7 +175,7 @@ body {
     display: block;
   }
   .login-view {
-    padding: 0;
+    padding: 5px;
   }
   .main-view {
     padding: 0 2% 0 2%;

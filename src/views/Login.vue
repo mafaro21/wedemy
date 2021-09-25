@@ -8,6 +8,7 @@
     <el-form status-icon :model="loginForm" :rules="rules" ref="loginForm">
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
+          type="email"
           placeholder="E-mail"
           v-model.trim="loginForm.email"
           class="field"

@@ -2,7 +2,7 @@
   <!-- <Drawer /> -->
   <!-- button for sideview, only shows on smaller screens -->
   <div class="phone-only">
-    <el-button @click="drawer = true" type="primary" class="phone-only">
+    <el-button @click="showDrawer()" type="primary" class="phone-only">
       <i class="el-icon-s-unfold phone-only"></i>
     </el-button>
   </div>
@@ -10,25 +10,33 @@
   <!-- the sideview -->
   <el-drawer
     size="70%"
-    title="I am the title"
+    title="More"
     v-model="drawer"
     :with-header="false"
-    :direction="direction"
+    direction="ltr"
   >
     <!-- side searchbar -->
     <div style="padding: 16px; margin-top: 15px">
-      <el-input
-        placeholder="Type something"
-        prefix-icon="el-icon-search"
-        class="main-only"
-        maxlength="20"
-        v-model="search"
-        clearable
-      >
-      </el-input>
+      <form @submit.prevent="handleSearch">
+        <el-input
+          placeholder="Search anything"
+          prefix-icon="el-icon-search"
+          class="main-only"
+          maxlength="20"
+          required
+          v-model.trim="search"
+          clearable
+        >
+        </el-input>
+      </form>
 
-      <!-- side login/signup buttons -->
-      <el-row v-if="!loggedIn" type="flex" justify="space-around" style="margin-top: 10px">
+      <!-- if NOT logged in -->
+      <el-row
+        v-if="!loggedIn"
+        type="flex"
+        justify="space-around"
+        style="margin-top: 10px"
+      >
         <router-link to="/login" class="none">
           <button class="btn btn-accent">Log In</button>
         </router-link>
@@ -48,9 +56,18 @@ export default {
   data() {
     return {
       drawer: false,
-      direction: "ltr",
-      loggedIn: false
+      loggedIn: false,
+      username: "",
+      search: "",
     };
+  },
+  methods: {
+    handleSearch() {
+      //TODO add search logic here
+    },
+    showDrawer(){
+      this.drawer = !this.drawer
+    }
   },
 };
 </script>

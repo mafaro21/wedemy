@@ -1,24 +1,33 @@
 <template>
   <div class="wrapper">
-    <p class="cart-header main-view">Your cart</p>
+    <p class="cart-header main-view">Your cart ({{cartCount}})</p>
 
     <div class="main-view top-margin">
-      <p>x Courses in Cart</p>
-      <div class="cart-view">
+
+      <!-- if nothing in cart -->
+      <div v-if="cartCount === 0" class="cart-view">
         <div>Your cart is empty. Go and explore</div>
 
-        <router-link to="/"
-          ><button class="btn btn-auto btn-accent">
+        <router-link to="/">
+          <button class="btn btn-auto btn-accent" style="color: white">
             Keep shopping
-          </button></router-link
-        >
+          </button>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts">
+import { defineComponent } from "@vue/runtime-core";
+
+export default defineComponent({
+  data() {
+    return {
+      cartCount: 0,
+    };
+  },
+});
 </script>
 
 <style>
