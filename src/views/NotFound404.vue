@@ -4,7 +4,7 @@
     <h1 style="color: black; margin-top: 50px">Error 404</h1>
     <h2 style="color: black">Hmm, You seem to be lost.</h2>
     <router-link to="/" replace>
-      <el-button type="success">Go Home?</el-button>
+      <el-button type="success">Go Home</el-button>
     </router-link>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 </script>
 <style>
 .widescreen {
-  margin: 0px auto;
+  margin: 0 auto;
   text-align: center;
   width: 90%;
   height: 70vh;

@@ -173,10 +173,7 @@ export default {
     },
     submitToServer: async (load) => {
       await AuthService.registerUser(
-        load.email,
-        load.fullname,
-        load.password,
-        load.confirmPass
+        {email : load.email, fullname : load.fullname, password : load.password, confirmPass : load.confirmPass}
       );
     },
   },

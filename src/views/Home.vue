@@ -35,7 +35,7 @@
               :key="course.courseId"
               @click="goToCourse(course.courseId)"
             >
-              <img :src="course.thumbUrl" class="product-img" />
+              <img :src="course.thumbUrl" class="product-img"  :alt="course.title"/>
               <div style="padding: 14px">
                 <div class="card-title">{{ course.title }}</div>
                 <div class="card-author">

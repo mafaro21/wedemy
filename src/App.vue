@@ -6,15 +6,19 @@
   <!-- </el-scrollbar> -->
 </template>
 
-<script lang="ts">
+<script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+import store from "./store";
 
 export default {
   name: "App",
   components: {
     Navbar,
     Footer,
+  },
+  provide: {
+    store,
   },
 };
 </script>
@@ -38,7 +42,6 @@ body {
   /* background-color: #535353; */
   background-color: var(--background);
 }
-
 
 #app {
   font-family: "Public Sans", system-ui, sans-serif;
@@ -149,7 +152,6 @@ body {
   color: #636362;
   font-size: 14px;
 }
-
 
 /* product images in a catalog */
 .product-img {

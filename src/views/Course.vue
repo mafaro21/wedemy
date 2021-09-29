@@ -8,7 +8,7 @@
     </el-breadcrumb>
 
     <div style="color: red" v-if="errorMessage.length">{{ errorMessage }}</div>
-    
+
     <!-- START SINGLE COUSE -->
     <div v-if="!errorMessage.length" class="course-view" style="margin-top: 24px">
       <div class="course-preview">
@@ -104,7 +104,7 @@ export default defineComponent({
     CourseService.getById(this.courseId)
       .then((res) => {
         this.singleCourse = res.data;
-        document.title = this.singleCourse.title + " | Wedemy";
+        document.title = `${this.singleCourse.title} | Wedemy`;
       })
       .catch((error) => {
         this.errorMessage = error.message;

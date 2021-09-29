@@ -72,7 +72,7 @@
 
     <!-- log in/ sign up buttons -->
     <div class="">
-      <!-- buttons if user is not logged in -->
+      <!-- show buttons if NOT logged in -->
       <div v-if="!loggedIn">
         <router-link to="/login" class="none main-only">
           <button class="btn btn-accent">Log In</button>
@@ -85,13 +85,12 @@
         </router-link>
       </div>
 
-      <!-- START DROPDOWN + AVATAR -->
+      <!-- START DROPDOWN + AVATAR (if logged IN) -->
       <div
         class="main-only"
-        v-if="loggedIn"
+        v-else
         :style="{ textDecoration: 'none', display: 'flex' }"
       >
-        <!-- show if logged in -->
         <el-dropdown>
           <el-avatar
             :size="36"
@@ -113,9 +112,9 @@
 </template>
 
 <script lang="ts">
-// import { ref } from "vue";
 import AuthService from "@/services/AuthService";
-import { defineComponent } from "@vue/runtime-core";
+import store from "@/store";
+import { defineComponent, ref } from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
 
 export default defineComponent({
@@ -123,13 +122,12 @@ export default defineComponent({
   components: {
     Drawer,
   },
-
   data() {
     return {
       search: "",
-      loggedIn: false,
-      username: "Anna",
-      cartCount: 0,
+      loggedIn: ref(store.state.loggedIn),
+      username: ref(store.state.username),
+      cartCount: ref(0),
     };
   },
   methods: {
@@ -148,7 +146,6 @@ export default defineComponent({
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap");
 
 .nav {
   border-top: 9px solid;
