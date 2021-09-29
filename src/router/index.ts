@@ -35,7 +35,10 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: "/:pathMatch(.*)*",
         name: "NotFound",
-        component: () => import("../views/NotFound404.vue")
+        component: () => import("../views/NotFound404.vue"),
+        meta: {
+            hideNavbar: true
+        }
     }
 ];
 

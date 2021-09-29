@@ -12,7 +12,8 @@
           v-model.trim="signupForm.fullname"
           class="field"
           clearable
-        ></el-input>
+        >
+        </el-input>
       </el-form-item>
 
       <el-form-item prop="email">
@@ -48,7 +49,7 @@
         <el-button
           plain
           class="btn-accent field login-btn"
-          @click="handleSignup(signupForm)"
+          @click="handleSignup('signupForm')"
           style="font-weight: 600"
           type="success"
           :loading="isLoading"
@@ -60,15 +61,15 @@
 
     <div style="margin-top: 13px">
       Already have an account?
-      <router-link to="/login" class="none" :style="{ fontWeight: '800' }"
-        >LogIn</router-link
-      >
+      <router-link to="/login" class="none" :style="{ fontWeight: '800' }">
+        LogIn
+      </router-link>
     </div>
   </div>
 </template>
 
 
-<script >
+<script>
 import AuthService from "@/services/AuthService";
 // import { ref } from "vue";
 
@@ -77,7 +78,7 @@ export default {
     document.title = "Signup | Wedemy";
 
     /* validation for fullname */
-    var checkName = (rule, value, callback) => {
+    const checkName = (rule, value, callback) => {
       let reg = /[^ 0-9A-Za-z_.]/gi;
 
       if (!value) {
@@ -95,7 +96,7 @@ export default {
     };
 
     // validation for email
-    var checkEmail = (rule, value, callback) => {
+    const checkEmail = (rule, value, callback) => {
       let reg = /(^[0-9A-Za-z][\w.-]+@[\w]+\.[\w]\S+\w)$/gi;
 
       if (!value) {
@@ -108,16 +109,10 @@ export default {
     };
 
     // validation for password
-    var checkPassword = (rule, value, callback) => {
-      // let reg = /[<>;&]/gi; <-----------lets allow these characters in password
-
+    const checkPassword = (rule, value, callback) => {
       if (!value) {
         callback(new Error("Password can't be empty"));
-      }
-      //  else if (reg.test(this.signupForm.password)) {
-      //   callback(new Error("Password contains illegal characters"));
-      // }
-      else if (value.length < 8) {
+      } else if (value.length < 8) {
         return callback(
           new Error("Password should be atleast 8 characters long")
         );
@@ -128,7 +123,7 @@ export default {
 
     // validation for re-enter password
 
-    var checkReenter = (rule, value, callback) => {
+    const checkReenter = (rule, value, callback) => {
       if (!value) {
         callback(new Error("Re-enter the password"));
       } else if (value !== this.signupForm.password) {
@@ -166,7 +161,9 @@ export default {
         if (valid) {
           this.submitToServer(this.signupForm)
             .catch((error) => {
-              this.signupError = error.message;
+              this.signupError = error.response
+                ? error.response.data.message
+                : error.message;
             })
             .finally(() => (this.isLoading = false));
         } else {
@@ -176,10 +173,7 @@ export default {
     },
     submitToServer: async (load) => {
       await AuthService.registerUser(
-        load.email,
-        load.fullname,
-        load.password,
-        load.confirmPass
+        {email : load.email, fullname : load.fullname, password : load.password, confirmPass : load.confirmPass}
       );
     },
   },

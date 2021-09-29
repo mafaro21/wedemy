@@ -1,9 +1,15 @@
-import axios from "axios";
 import http from '../axiosconfig';
+
+interface User {
+    email: string;
+    fullname: string;
+    password: string;
+    confirmPass: string;
+}
 
 class AuthService {
     loginUser(email: string, password: string) {
-        const url = "http://localhost:9000/auth/statuslogin";
+        const url = "/auth/statuslogin";
 
         const options = {
             headers: {
@@ -17,7 +23,7 @@ class AuthService {
             }
         };
 
-        return axios.post(url, null, options);
+        return http.post(url, null, options);
     }
 
     logoutUser() {
@@ -25,7 +31,7 @@ class AuthService {
     }
 
 
-    registerUser(email: string, fullname: string, password: string, confirmPass: string) {
+    registerUser({email, fullname, password, confirmPass}: User) {
         return http.post("/auth/register", {
             fullname,
             email,

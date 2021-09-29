@@ -1,12 +1,12 @@
 <template id="app">
   <!-- <el-scrollbar height="400px" > -->
-  <Navbar />
+  <Navbar v-if="!this.$route.meta.hideNavbar" />
   <router-view />
-  <Footer />
+  <Footer v-if="!this.$route.meta.hideNavbar" />
   <!-- </el-scrollbar> -->
 </template>
 
-<script lang="ts">
+<script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
 
@@ -15,7 +15,7 @@ export default {
   components: {
     Navbar,
     Footer,
-  },
+  }, 
 };
 </script>
 
@@ -39,7 +39,6 @@ body {
   background-color: var(--background);
 }
 
-
 #app {
   font-family: "Public Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -49,6 +48,7 @@ body {
   max-width: 100vw;
   /* margin-bottom: 90px; */
 }
+
 .wrapper {
   min-height: 91vh;
   margin-bottom: 90px;
@@ -114,6 +114,8 @@ body {
 /* button for login and signup */
 .login-btn {
   height: 40px;
+  width: 7em;
+  color: white;
   padding: 10px;
   border-radius: 8px;
   outline: none;
@@ -173,7 +175,7 @@ body {
     display: block;
   }
   .login-view {
-    padding: 0;
+    padding: 5px;
   }
   .main-view {
     padding: 0 2% 0 2%;

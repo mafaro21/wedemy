@@ -24,6 +24,7 @@
           :size="30"
           style="margin-top: 20px; margin-left: 20px"
         >
+          <!-- START OF SINGLE CARD -->
           <el-space v-if="courses.length" wrap :size="size">
             <el-card
               class="courseCard"
@@ -34,7 +35,11 @@
               :key="course.courseId"
               @click="goToCourse(course.courseId)"
             >
-              <img :src="course.thumbUrl" class="product-img" />
+              <img
+                :src="course.thumbUrl"
+                class="product-img"
+                :alt="course.title"
+              />
               <div style="padding: 14px">
                 <div class="card-title">{{ course.title }}</div>
                 <div class="card-author">
@@ -46,7 +51,7 @@
                   disabled
                   show-score
                   text-color="#ff9900"
-                  score-template="{value} points"
+                  score-template="{value} rating"
                 >
                 </el-rate>
                 <div>${{ course.price }}</div>
@@ -54,12 +59,12 @@
             </el-card>
           </el-space>
         </el-space>
-        <!-- </router-link> -->
+        <!-- END OF SINGLE CARD -->
       </div>
 
       <!-- top categories -->
       <div style="margin-top: 40px">
-        <h3>Top Categories</h3>
+        <h1>Top Categories</h1>
 
         <div class="flex top">
           <el-card
@@ -111,12 +116,11 @@ export default defineComponent({
         });
     },
     goToCourse(courseId: number) {
-      this.$router
-        .push(`/course/${courseId}`)
-        .catch((error) => console.error(error));
+      this.$router.push(`/course/${courseId}`);
     },
   },
   mounted() {
+    window.scrollTo(0, 0);
     this.fetchAllCourses();
   },
 });
@@ -147,28 +151,19 @@ export default defineComponent({
   height: 100%;
 } */
 .top-img {
-  width: 100%;
+  width: 90vw;
   height: auto;
 }
 .top-image {
   width: 100%;
-}
-.card-title {
-  overflow: hidden;
-  word-wrap: break-word;
-  word-break: break-all;
 }
 
 .server-error {
   color: red;
 }
 
-/* div.el-card__body {
-  width: 306px;
-} */
-
-.courseCard{
-  width: 284px;
+.courseCard {
+  width: 285px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -176,8 +171,13 @@ export default defineComponent({
     width: 100%;
     height: 150px;
   }
+
   .flex {
     display: block;
+  }
+
+  .courseCard {
+    width: 80vw;
   }
 }
 </style>

@@ -4,19 +4,20 @@
 
     <!-- logo -->
     <div class="nav-icon">
-      <router-link to="/"
-        ><img
+      <router-link to="/">
+        <img
           src="../assets/android-chrome-512x512.png"
           class="icon"
           style="margin-top: 3px"
-      /></router-link>
-      <router-link to="/" class="none logo">Wedemy</router-link>
+        />
+        <img src="../assets/WedemyLogo.png" alt="Wedemy" class="textlogo" />
+      </router-link>
     </div>
 
     <!-- category dropdown -->
     <div
       class="main-only"
-      :style="{ marginTop: '13px', textDecoration: 'none' }"
+      :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
     >
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -25,8 +26,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <router-link to="/category"
-              ><el-dropdown-item>Development</el-dropdown-item>
+            <router-link to="/category">
+              <el-dropdown-item>Development</el-dropdown-item>
             </router-link>
             <el-dropdown-item>Finance</el-dropdown-item>
             <el-dropdown-item>Design</el-dropdown-item>
@@ -34,8 +35,8 @@
             <el-dropdown-item>Videography</el-dropdown-item>
             <el-dropdown-item>Real estate</el-dropdown-item>
             <el-dropdown-item>Music</el-dropdown-item>
-            <el-dropdown-item>Office </el-dropdown-item>
-            <el-dropdown-item>IT & Software</el-dropdown-item>
+            <el-dropdown-item>Office</el-dropdown-item>
+            <el-dropdown-item>IT &amp; Software</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -43,56 +44,67 @@
 
     <!-- search bar -->
     <div class="demo-input-suffix main-only" style="width: 40%">
-      <el-input
-        placeholder="Search something"
-        prefix-icon="el-icon-search"
-        class="main-only"
-        maxlength="20"
-        v-model="search"
-        clearable
-      >
-      </el-input>
+      <form @submit.prevent="handleSearch">
+        <el-input
+          placeholder="Search something"
+          prefix-icon="el-icon-search"
+          class="main-only"
+          maxlength="20"
+          v-model="search"
+          clearable
+        >
+        </el-input>
+      </form>
     </div>
 
     <!-- cart icon if signed in -->
     <div v-if="loggedIn" style="margin-top: 6px" class="main-only">
       <el-badge :value="cartCount" class="item">
         <router-link to="/cart">
-          <font-awesome-icon :icon="['fas', 'shopping-cart']" size="lg" class="cart" />
+          <font-awesome-icon
+            :icon="['fas', 'shopping-cart']"
+            size="lg"
+            class="cart"
+          />
         </router-link>
       </el-badge>
     </div>
 
     <!-- log in/ sign up buttons -->
     <div class="">
-      <!-- buttons if user is not logged in -->
+      <!-- show buttons if NOT logged in -->
       <div v-if="!loggedIn">
         <router-link to="/login" class="none main-only">
           <button class="btn btn-accent">Log In</button>
         </router-link>
 
         <router-link to="/signup" class="none main-only">
-          <button class="btn btn-accent-outline" style="margin-left: 0.75em">Sign Up</button>
+          <button class="btn btn-accent-outline" style="margin-left: 0.75em">
+            Sign Up
+          </button>
         </router-link>
       </div>
 
+      <!-- START DROPDOWN + AVATAR (if logged IN) -->
       <div
         class="main-only"
+        v-else
         :style="{ textDecoration: 'none', display: 'flex' }"
       >
-        <!-- show if logged in -->
-        <el-dropdown v-if="loggedIn">
+        <el-dropdown>
           <el-avatar
             :size="36"
             style="margin-top: 1px"
-            :src="attachAvatarLink(username)"
+            :src="attachAvatarLink(store.state.username)"
           ></el-avatar>
           <span class="el-dropdown-link" style="font-size: 16px"> </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item disabled>{{ username }}</el-dropdown-item>
+              <el-dropdown-item disabled>
+                {{ store.state.username }}
+              </el-dropdown-item>
               <el-dropdown-item divided>My Account</el-dropdown-item>
-              <el-dropdown-item>Logout</el-dropdown-item>
+              <el-dropdown-item @click="logout()">Logout</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -102,8 +114,9 @@
 </template>
 
 <script lang="ts">
-// import { ref } from "vue";
-import { defineComponent } from "@vue/runtime-core";
+import AuthService from "@/services/AuthService";
+import store from "@/store";
+import { defineComponent, ref } from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
 
 export default defineComponent({
@@ -111,30 +124,36 @@ export default defineComponent({
   components: {
     Drawer,
   },
-
+  inject: ["store"],
   data() {
     return {
       search: "",
-      loggedIn: false,
-      username: "Anna",
-      cartCount: 0
+      loggedIn: ref(false),
+      username: ref(""),
+      cartCount: ref(0),
     };
   },
   methods: {
     attachAvatarLink: (username: string) => {
       return `https://avatars.dicebear.com/api/initials/${username}.svg`;
     },
+    handleSearch() {
+      //TODO add search logic here
+    },
+    logout: async () => {
+      await AuthService.logoutUser();
+      //TODO clear store, refresh page.
+    },
   },
 });
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap");
-
 .nav {
   border-top: 9px solid;
   border-top-color: #00ff29;
   padding: 9px 2% 9px 2%;
+  position: sticky;
   /* border-image: linear-gradient(90deg, #102610 0%, #00ff29 100%); */
   border-bottom: 1px solid black;
   text-decoration: none;
@@ -217,6 +236,11 @@ input::placeholder {
   .main-only,
   i,
   .nav-link {
+    display: none;
+  }
+
+  .textlogo {
+    position: absolute;
     display: none;
   }
 
