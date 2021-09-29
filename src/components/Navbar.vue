@@ -95,12 +95,14 @@
           <el-avatar
             :size="36"
             style="margin-top: 1px"
-            :src="attachAvatarLink(username)"
+            :src="attachAvatarLink(store.state.username)"
           ></el-avatar>
           <span class="el-dropdown-link" style="font-size: 16px"> </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item disabled>{{ username }}</el-dropdown-item>
+              <el-dropdown-item disabled>
+                {{ store.state.username }}
+              </el-dropdown-item>
               <el-dropdown-item divided>My Account</el-dropdown-item>
               <el-dropdown-item @click="logout()">Logout</el-dropdown-item>
             </el-dropdown-menu>
@@ -122,11 +124,12 @@ export default defineComponent({
   components: {
     Drawer,
   },
+  inject: ["store"],
   data() {
     return {
       search: "",
-      loggedIn: ref(store.state.loggedIn),
-      username: ref(store.state.username),
+      loggedIn: ref(false),
+      username: ref(""),
       cartCount: ref(0),
     };
   },
@@ -146,7 +149,6 @@ export default defineComponent({
 </script>
 
 <style>
-
 .nav {
   border-top: 9px solid;
   border-top-color: #00ff29;

@@ -1,4 +1,3 @@
-import axios from "axios";
 import http from '../axiosconfig';
 
 interface User {
@@ -10,7 +9,7 @@ interface User {
 
 class AuthService {
     loginUser(email: string, password: string) {
-        const url = "http://localhost:9000/auth/statuslogin";
+        const url = "/auth/statuslogin";
 
         const options = {
             headers: {
@@ -24,7 +23,7 @@ class AuthService {
             }
         };
 
-        return axios.post(url, null, options);
+        return http.post(url, null, options);
     }
 
     logoutUser() {

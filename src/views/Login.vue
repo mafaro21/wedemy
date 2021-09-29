@@ -5,7 +5,7 @@
       {{ loginError }}
     </p>
 
-    <el-form status-icon :model="loginForm" :rules="rules" ref="loginForm">
+    <el-form @submit.prevent status-icon :model="loginForm" :rules="rules" ref="loginForm">
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
           type="email"
@@ -26,16 +26,15 @@
       </el-form-item>
 
       <div style="margin-top: 8px">
-        <el-button
-          plain
+        <button
           class="btn-accent field login-btn"
           @click="handleLogin('loginForm')"
           style="font-weight: 600"
-          type="success"
+          type="submit"
           :loading="isLoading"
         >
           Log In
-        </el-button>
+        </button>
       </div>
     </el-form>
 
@@ -51,6 +50,7 @@
 <script>
 import AuthService from "@/services/AuthService";
 export default {
+  inject: ["store", "actions"],
   data() {
     document.title = "Login | Wedemy";
 
@@ -110,7 +110,8 @@ export default {
       });
     },
     submitToServer: async (load) => {
-      await AuthService.loginUser(load.email, load.password);
+     let res = await AuthService.loginUser(load.email, load.password);
+    // res.data.user.fullname   <==== attach this to Store
     },
   },
 };

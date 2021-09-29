@@ -9,17 +9,13 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
-import store from "./store";
 
 export default {
   name: "App",
   components: {
     Navbar,
     Footer,
-  },
-  provide: {
-    store,
-  },
+  }, 
 };
 </script>
 
@@ -118,6 +114,8 @@ body {
 /* button for login and signup */
 .login-btn {
   height: 40px;
+  width: 7em;
+  color: white;
   padding: 10px;
   border-radius: 8px;
   outline: none;

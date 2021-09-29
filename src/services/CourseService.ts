@@ -1,5 +1,13 @@
 import http from '../axiosconfig';
 
+interface Course {
+    title: string;
+    price: number;
+    rating: number;
+    thumbUrl?: string;
+    category: string;
+}
+
 class CourseService {
 
     getAll() {
@@ -14,6 +22,9 @@ class CourseService {
         return http.get(`/courses/cat/${category}`);
     }
 
+    createOne(payload: Course){
+        return http.post("/courses/create", payload);
+    }
 
     findByTitle(title: string) {
         return http.get(`/courses/search?title=${title}`);
