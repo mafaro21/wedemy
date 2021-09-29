@@ -1,7 +1,8 @@
 import { reactive } from 'vue'
 
+//BROKEN. NOT WORKING PERFECTLY
 const state = reactive({
-    username: "John",
+    username: "",
     loggedIn: false
 })
 
