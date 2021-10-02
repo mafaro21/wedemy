@@ -1,9 +1,6 @@
 <template>
   <div class="main-view login-view wrapper">
     <h2>Create An Account!</h2>
-    <p style="color: red; margin-top: 10px; font-weight: 600">
-      {{ signupError }}
-    </p>
 
     <el-form status-icon :model="signupForm" :rules="rules" ref="signupForm">
       <el-form-item style="margin-top: 8px" prop="fullname">
@@ -47,12 +44,12 @@
 
       <el-form-item style="margin-top: 8px">
         <el-button
-          plain
           class="btn-accent field login-btn"
           @click="handleSignup('signupForm')"
           style="font-weight: 600"
           type="success"
           :loading="isLoading"
+          native-type="submit"
         >
           Sign Up
         </el-button>
@@ -71,7 +68,7 @@
 
 <script>
 import AuthService from "@/services/AuthService";
-// import { ref } from "vue";
+import { ElMessage } from "element-plus";
 
 export default {
   data() {
@@ -79,7 +76,7 @@ export default {
 
     /* validation for fullname */
     const checkName = (rule, value, callback) => {
-      let reg = /[^ 0-9A-Za-z_.]/gi;
+      let reg = /[^ 0-9A-Za-z_.\-']/gi;
 
       if (!value) {
         return callback(new Error("Name can't be empty"));
@@ -121,8 +118,7 @@ export default {
       }
     };
 
-    // validation for re-enter password
-
+    // validation for confirm password
     const checkReenter = (rule, value, callback) => {
       if (!value) {
         callback(new Error("Re-enter the password"));
@@ -150,7 +146,6 @@ export default {
       },
 
       //other
-      signupError: "",
       isLoading: false,
     };
   },
@@ -159,12 +154,10 @@ export default {
     handleSignup(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.isLoading = true;
           this.submitToServer(this.signupForm)
-            .catch((error) => {
-              this.signupError = error.response
-                ? error.response.data.message
-                : error.message;
-            })
+            //===TODO DISPLAY SUCCESS notif + REDIRECT TO LOGIN ===
+            .catch((error) => ElMessage.error(error.message))
             .finally(() => (this.isLoading = false));
         } else {
           return false;
@@ -172,9 +165,7 @@ export default {
       });
     },
     submitToServer: async (load) => {
-      await AuthService.registerUser(
-        {email : load.email, fullname : load.fullname, password : load.password, confirmPass : load.confirmPass}
-      );
+      await AuthService.registerUser({ ...load });
     },
   },
 };

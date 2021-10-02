@@ -1,22 +1,27 @@
 <template id="app">
-  <!-- <el-scrollbar height="400px" > -->
   <Navbar v-if="!this.$route.meta.hideNavbar" />
   <router-view />
   <Footer v-if="!this.$route.meta.hideNavbar" />
-  <!-- </el-scrollbar> -->
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+import store from "./store";
+import { defineComponent } from "@vue/runtime-core";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     Navbar,
     Footer,
-  }, 
-};
+  },
+  mounted() {
+    store.isAuthenticated().catch((error) => {
+      console.error("AUTH_ERROR", error);
+    });
+  },
+});
 </script>
 
 
@@ -24,6 +29,7 @@ export default {
 * {
   margin: 0;
   padding: 0;
+  font-family: "Public Sans", system-ui, sans-serif;
 }
 
 :root {
@@ -150,6 +156,10 @@ body {
   color: #636362;
   font-size: 14px;
 }
+
+/* .el-message el-message--error {
+  font-family: "Public Sans", system-ui, sans-serif;
+} */
 
 /* product images in a catalog */
 .product-img {

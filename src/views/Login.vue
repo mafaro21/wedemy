@@ -1,11 +1,14 @@
 <template>
   <div class="main-view login-view wrapper">
     <h2>Login to Continue Learning!</h2>
-    <p style="color: red; margin-top: 10px; font-weight: 600">
-      {{ loginError }}
-    </p>
 
-    <el-form @submit.prevent status-icon :model="loginForm" :rules="rules" ref="loginForm">
+    <el-form
+      @submit.prevent
+      status-icon
+      :model="loginForm"
+      :rules="rules"
+      ref="loginForm"
+    >
       <el-form-item style="margin-top: 8px" prop="email">
         <el-input
           type="email"
@@ -26,22 +29,22 @@
       </el-form-item>
 
       <div style="margin-top: 8px">
-        <button
+        <el-button
           class="btn-accent field login-btn"
           @click="handleLogin('loginForm')"
           style="font-weight: 600"
-          type="submit"
+          native-type="submit"
+          type="success"
           :loading="isLoading"
         >
           Log In
-        </button>
+        </el-button>
       </div>
     </el-form>
-
     <div style="margin-top: 13px">
       Don't have an account?
-      <router-link to="/signup" class="none" :style="{ fontWeight: '800' }"
-        >SignUp
+      <router-link to="/signup" class="none" :style="{ fontWeight: '800' }">
+        SignUp
       </router-link>
     </div>
   </div>
@@ -49,8 +52,10 @@
 
 <script>
 import AuthService from "@/services/AuthService";
+import store from "@/store";
+import { ElMessage } from "element-plus";
 export default {
-  inject: ["store", "actions"],
+  inject: ["store"],
   data() {
     document.title = "Login | Wedemy";
 
@@ -89,20 +94,17 @@ export default {
       },
 
       //other
-      loginError: "",
       isLoading: false,
     };
   },
-
   methods: {
     handleLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.isLoading = true;
           this.submitToServer(this.loginForm)
-            .catch((error) => {
-              this.loginError = error.message;
-            })
+            .then(() => this.redirectToHome())
+            .catch((error) => this.displayError(error))
             .finally(() => (this.isLoading = false));
         } else {
           return false;
@@ -110,8 +112,17 @@ export default {
       });
     },
     submitToServer: async (load) => {
-     let res = await AuthService.loginUser(load.email, load.password);
-    // res.data.user.fullname   <==== attach this to Store
+      let res = await AuthService.loginUser(load.email, load.password);
+      let { fullname, id } = res.data.user;
+      store.updateAuthStatus(fullname, id);
+    },
+    redirectToHome() {
+      ElMessage.success("Welcome back!");
+      this.$router.push("/");
+    },
+    displayError(error) {
+      let mama = error.response.status === 401 ? "Wrong credentials" : error.message;
+      ElMessage.error(mama);
     },
   },
 };

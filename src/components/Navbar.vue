@@ -1,23 +1,23 @@
 <template>
   <el-row type="flex" justify="space-between" class="nav">
-    <Drawer />
+    <Drawer/>
 
     <!-- logo -->
     <div class="nav-icon">
       <router-link to="/">
         <img
-          src="../assets/android-chrome-512x512.png"
-          class="icon"
-          style="margin-top: 3px"
-        />
-        <img src="../assets/WedemyLogo.png" alt="Wedemy" class="textlogo" />
+            src="../images/android-chrome-512x512.png"
+            class="icon"
+            style="margin-top: 3px"
+            alt="Home"/>
+        <img src="../images/WedemyLogo.png" alt="Wedemy" class="textlogo"/>
       </router-link>
     </div>
 
     <!-- category dropdown -->
     <div
-      class="main-only"
-      :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
+        class="main-only"
+        :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
     >
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -46,69 +46,71 @@
     <div class="demo-input-suffix main-only" style="width: 40%">
       <form @submit.prevent="handleSearch">
         <el-input
-          placeholder="Search something"
-          prefix-icon="el-icon-search"
-          class="main-only"
-          maxlength="20"
-          v-model="search"
-          clearable
+            placeholder="What do you want to learn?"
+            prefix-icon="el-icon-search"
+            class="main-only"
+            maxlength="20"
+            v-model="search"
+            clearable
         >
         </el-input>
       </form>
     </div>
 
     <!-- cart icon if signed in -->
-    <div v-if="loggedIn" style="margin-top: 6px" class="main-only">
-      <el-badge :value="cartCount" class="item">
+    <div
+        v-if="store.getters.isLoggedIn"
+        style="margin-top: 6px"
+        class="main-only"
+    >
+      <el-badge :value="store.getters.getCartCount" class="item">
         <router-link to="/cart">
           <font-awesome-icon
-            :icon="['fas', 'shopping-cart']"
-            size="lg"
-            class="cart"
+              :icon="['fas', 'shopping-cart']"
+              size="lg"
+              class="cart"
           />
         </router-link>
       </el-badge>
     </div>
 
     <!-- log in/ sign up buttons -->
-    <div class="">
-      <!-- show buttons if NOT logged in -->
-      <div v-if="!loggedIn">
-        <router-link to="/login" class="none main-only">
-          <button class="btn btn-accent">Log In</button>
-        </router-link>
+    <!-- show buttons if NOT logged in -->
+    <div v-if="!store.getters.isLoggedIn">
+      <router-link to="/login" class="none main-only">
+        <button class="btn btn-accent">Log In</button>
+      </router-link>
 
-        <router-link to="/signup" class="none main-only">
-          <button class="btn btn-accent-outline" style="margin-left: 0.75em">
-            Sign Up
-          </button>
-        </router-link>
-      </div>
+      <router-link to="/signup" class="none main-only">
+        <button class="btn btn-accent-outline" style="margin-left: 0.75em">
+          Sign Up
+        </button>
+      </router-link>
+    </div>
 
-      <!-- START DROPDOWN + AVATAR (if logged IN) -->
-      <div
+    <!-- START DROPDOWN + AVATAR (if logged IN) -->
+    <div
         class="main-only"
         v-else
         :style="{ textDecoration: 'none', display: 'flex' }"
-      >
-        <el-dropdown>
-          <el-avatar
+    >
+      <el-dropdown>
+        <el-avatar
             :size="36"
             style="margin-top: 1px"
             :src="attachAvatarLink(store.state.username)"
-          ></el-avatar>
-          <span class="el-dropdown-link" style="font-size: 16px"> </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item disabled>
-                {{ store.state.username }}
-              </el-dropdown-item>
-              <el-dropdown-item divided>My Account</el-dropdown-item>
-              <el-dropdown-item @click="logout()">Logout</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
+        ></el-avatar>
+        <span class="el-dropdown-link" style="font-size: 16px"> </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item disabled>
+              {{ store.state.username }}
+            </el-dropdown-item>
+            <el-dropdown-item divided>My Account</el-dropdown-item>
+            <el-dropdown-item @click="logout()">Logout</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </el-row>
 </template>
@@ -116,7 +118,7 @@
 <script lang="ts">
 import AuthService from "@/services/AuthService";
 import store from "@/store";
-import { defineComponent, ref } from "@vue/runtime-core";
+import {defineComponent} from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
 
 export default defineComponent({
@@ -127,10 +129,7 @@ export default defineComponent({
   inject: ["store"],
   data() {
     return {
-      search: "",
-      loggedIn: ref(false),
-      username: ref(""),
-      cartCount: ref(0),
+      search: ""
     };
   },
   methods: {
@@ -141,8 +140,13 @@ export default defineComponent({
       //TODO add search logic here
     },
     logout: async () => {
-      await AuthService.logoutUser();
-      //TODO clear store, refresh page.
+      try {
+        await AuthService.logoutUser();
+        store.setLogout();
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 });
@@ -157,25 +161,14 @@ export default defineComponent({
   /* border-image: linear-gradient(90deg, #102610 0%, #00ff29 100%); */
   border-bottom: 1px solid black;
   text-decoration: none;
-  box-shadow: 0px 1px 3px grey;
-}
-
-.dropdown-menu {
-  font-family: system-ui, sans-serif;
-}
-
-.logo {
-  font-size: 26px;
-  font-weight: 700;
-  color: #262a34;
-  transition: ease-in-out 0.26s;
-  font-family: "Leckerli One", cursive;
+  box-shadow: 0 1px 3px grey;
 }
 
 .icon {
   width: 34px;
   height: 34px;
 }
+
 .nav-icon:hover,
 .cart:hover {
   transform: scale(1.1);
@@ -184,8 +177,7 @@ export default defineComponent({
 }
 
 input {
-  padding: 13px;
-  padding-left: 10%;
+  padding: 13px 13px 13px 10%;
   border: 1px solid grey;
   border-radius: 28px;
   /* height: 1px; */
@@ -194,19 +186,24 @@ input {
   color: black;
   outline: none;
 }
+
 input::placeholder {
   color: grey;
 }
+
 .el-dropdown-menu__item {
   font-family: "Public Sans", system-ui, sans-serif;
 }
+
 .input-sidebar {
   width: 250px;
 }
+
 .cart {
   height: 34px;
   color: black;
 }
+
 .btn-sidebar {
   width: 120px;
   padding: 6%;
@@ -216,17 +213,20 @@ input::placeholder {
 .display {
   display: none;
 }
+
 .nav-link {
   margin-top: 14px;
   padding: 0;
   /* height: 36px; */
   /* width: 0; */
 }
+
 .categories {
   border: 0;
   outline: none;
   /* background-color: aqua; */
 }
+
 .phone-only {
   display: none;
 }
