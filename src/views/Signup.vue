@@ -2,7 +2,7 @@
   <div class="main-view login-view wrapper">
     <h2>Create An Account!</h2>
 
-    <el-form status-icon :model="signupForm" :rules="rules" ref="signupForm">
+    <el-form @submit.prevent status-icon :model="signupForm" :rules="rules" ref="signupForm">
       <el-form-item style="margin-top: 8px" prop="fullname">
         <el-input
           placeholder="Name"
@@ -111,7 +111,7 @@ export default {
         callback(new Error("Password can't be empty"));
       } else if (value.length < 8) {
         return callback(
-          new Error("Password should be atleast 8 characters long")
+          new Error("Minimum length is 8 characters long")
         );
       } else {
         callback();

@@ -6,15 +6,16 @@
     <div class="nav-icon">
       <router-link to="/">
         <img
-            src="../images/android-chrome-512x512.png"
+            src="@/images/android-chrome-512x512.png"
             class="icon"
             style="margin-top: 3px"
             alt="Home"/>
-        <img src="../images/WedemyLogo.png" alt="Wedemy" class="textlogo"/>
+        <img src="@/images/WedemyLogo.png" alt="Wedemy" class="textlogo"/>
       </router-link>
     </div>
 
     <!-- category dropdown -->
+    <!-- LATER, TO BE FETCHED FROM BACKEND -->
     <div
         class="main-only"
         :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
