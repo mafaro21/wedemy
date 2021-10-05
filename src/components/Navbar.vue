@@ -1,24 +1,24 @@
 <template>
   <el-row type="flex" justify="space-between" class="nav">
-    <Drawer/>
+    <Drawer />
 
     <!-- logo -->
     <div class="nav-icon">
       <router-link to="/">
         <img
-            src="@/images/android-chrome-512x512.png"
-            class="icon"
-            style="margin-top: 3px"
-            alt="Home"/>
-        <img src="@/images/WedemyLogo.png" alt="Wedemy" class="textlogo"/>
+          src="../images/android-chrome-512x512.png"
+          class="icon"
+          style="margin-top: 3px"
+          alt="Logo"
+        />
+        <img src="../images/WedemyLogo.png" alt="Home" class="logo" />
       </router-link>
     </div>
 
     <!-- category dropdown -->
-    <!-- LATER, TO BE FETCHED FROM BACKEND -->
     <div
-        class="main-only"
-        :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
+      class="main-only"
+      :style="{ marginTop: '13px', textDecoration: 'none', marginLeft: '5%' }"
     >
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -28,6 +28,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <router-link to="/category">
+              <!-- QUERY FROM DATABASE -->
               <el-dropdown-item>Development</el-dropdown-item>
             </router-link>
             <el-dropdown-item>Finance</el-dropdown-item>
@@ -47,12 +48,12 @@
     <div class="demo-input-suffix main-only" style="width: 40%">
       <form @submit.prevent="handleSearch">
         <el-input
-            placeholder="What do you want to learn?"
-            prefix-icon="el-icon-search"
-            class="main-only"
-            maxlength="20"
-            v-model="search"
-            clearable
+          placeholder="What do you want to learn?"
+          prefix-icon="el-icon-search"
+          class="main-only"
+          maxlength="20"
+          v-model="search"
+          clearable
         >
         </el-input>
       </form>
@@ -60,16 +61,16 @@
 
     <!-- cart icon if signed in -->
     <div
-        v-if="store.getters.isLoggedIn"
-        style="margin-top: 6px"
-        class="main-only"
+      v-if="store.getters.isLoggedIn"
+      style="margin-top: 6px"
+      class="main-only"
     >
       <el-badge :value="store.getters.getCartCount" class="item">
         <router-link to="/cart">
           <font-awesome-icon
-              :icon="['fas', 'shopping-cart']"
-              size="lg"
-              class="cart"
+            :icon="['fas', 'shopping-cart']"
+            size="lg"
+            class="cart"
           />
         </router-link>
       </el-badge>
@@ -91,16 +92,17 @@
 
     <!-- START DROPDOWN + AVATAR (if logged IN) -->
     <div
-        class="main-only"
-        v-else
-        :style="{ textDecoration: 'none', display: 'flex' }"
+      class="main-only"
+      v-else
+      :style="{ textDecoration: 'none', display: 'flex' }"
     >
       <el-dropdown>
         <el-avatar
-            :size="36"
-            style="margin-top: 1px"
-            :src="attachAvatarLink(store.state.username)"
-        ></el-avatar>
+          :size="36"
+          style="margin-top: 1px"
+          :src="attachAvatarLink(store.state.username)"
+        >
+        </el-avatar>
         <span class="el-dropdown-link" style="font-size: 16px"> </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -108,6 +110,11 @@
               {{ store.state.username }}
             </el-dropdown-item>
             <el-dropdown-item divided>My Account</el-dropdown-item>
+            <el-dropdown-item @click="goWishlist()">
+              My Wishist
+            </el-dropdown-item>
+            <el-dropdown-item>My Courses</el-dropdown-item>
+            <el-dropdown-item>Billing History</el-dropdown-item>
             <el-dropdown-item @click="logout()">Logout</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -119,8 +126,9 @@
 <script lang="ts">
 import AuthService from "@/services/AuthService";
 import store from "@/store";
-import {defineComponent} from "@vue/runtime-core";
+import { defineComponent } from "@vue/runtime-core";
 import Drawer from "./Drawer.vue";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "Navbar",
@@ -130,7 +138,7 @@ export default defineComponent({
   inject: ["store"],
   data() {
     return {
-      search: ""
+      search: "",
     };
   },
   methods: {
@@ -140,13 +148,16 @@ export default defineComponent({
     handleSearch() {
       //TODO add search logic here
     },
+    goWishlist() {
+      this.$router.push("/wishlist");
+    },
     logout: async () => {
       try {
         await AuthService.logoutUser();
         store.setLogout();
-        window.location.reload();
+        window.location.replace("/");
       } catch (error) {
-        console.error(error);
+        ElMessage.error(error.message);
       }
     },
   },
@@ -192,10 +203,6 @@ input::placeholder {
   color: grey;
 }
 
-.el-dropdown-menu__item {
-  font-family: "Public Sans", system-ui, sans-serif;
-}
-
 .input-sidebar {
   width: 250px;
 }
@@ -235,8 +242,7 @@ input::placeholder {
 @media only screen and (max-width: 600px) {
   .logo,
   .main-only,
-  i,
-  .nav-link {
+  i {
     display: none;
   }
 

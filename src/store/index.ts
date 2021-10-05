@@ -1,8 +1,7 @@
 import { computed, reactive } from "vue";
 import http from "@/axiosconfig";
 
-//THIS IS EQUIVALENT TO REACT's USECONTEXT
-
+//FOR USER STATE
 interface userState {
     id: number;
     username: string;
@@ -10,7 +9,6 @@ interface userState {
     cartCount: number;
 }
 
-//FOR USER STATE
 const user: userState = reactive({
     id: 0,
     username: "",
@@ -18,31 +16,26 @@ const user: userState = reactive({
     cartCount: 0
 });
 
+
 //GETTERS
 const getters = reactive({
     isLoggedIn: computed(() => user.loggedIn),
     getCartCount: computed(() => user.cartCount)
 });
 
-
-//ACTIONS
 const myActions = {
     setLogout() {
         user.loggedIn = false;
         user.username = "";
     },
 
-    updateAuthStatus(fullname: string, userId: number) {
-        user.loggedIn = true;
-        user.username = fullname;
-        user.id = userId
-    },
 
-    async isAuthenticated() {
+    async getAuthStatusServer() {
         try {
-            let res = await http.post("/auth/statuslogin", null);
-            user.loggedIn = res.data.success;
+            let res = await http.get("/auth/statuslogin");
+            user.loggedIn = res.data.loggedIn;
             user.username = res.data.user.fullname;
+            user.id = res.data.user.id;
         } catch (error) {
             throw error;
         }
@@ -55,7 +48,7 @@ const myActions = {
             user.cartCount = res.data.count
             return user.cartCount;
         } catch (error) {
-           throw error;
+            throw error;
         }
     }
 };
