@@ -27,8 +27,8 @@ export default {
 }
 
 body {
-  background-color: #535353;
-  /* background-color: var(--background); */
+  /* background-color: #535353; */
+  background-color: var(--background);
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;800&display=swap");
@@ -160,6 +160,7 @@ body {
 }
 .product-img:hover {
   transform: scale(1.2);
+  /* filter: brightness(40%); */
 }
 
 .phone-only {

@@ -44,7 +44,9 @@
   </div>
 </template>
 
-<script>
+<script >
+import axios from "axios";
+
 export default {
   data() {
     document.title = "Login | Wedemy";
@@ -100,13 +102,44 @@ export default {
     handleLogin(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          let dataObject = {
+            email: this.loginForm.email,
+            password: this.loginForm.password,
+          };
+
+          axios
+            .post("http://192.168.199.109:8081/auth/login", dataObject)
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.error(err);
+            })
+            .finally(() => {
+              alert("clicked");
+            });
         } else {
           this.loginError = "Some credentials haven't been met";
           return false;
         }
       });
     },
+  },
+
+  mounted() {
+    axios
+      .get("http://192.168.199.109:8081/profile/id/1", {
+        auth: {
+          username: "davisinyo@gmail.com",
+          password: "x12345678",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

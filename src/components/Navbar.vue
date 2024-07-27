@@ -14,7 +14,7 @@
     </div>
 
     <!-- category dropdown -->
-    <div
+    <!-- <div
       class="main-only"
       :style="{ marginTop: '13px', textDecoration: 'none' }"
     >
@@ -38,10 +38,13 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-    </div>
+    </div> -->
 
     <!-- search bar -->
-    <div class="demo-input-suffix main-only" style="width: 40%">
+    <div
+      class="demo-input-suffix main-only"
+      style="width: 40%; margin-left: 20%"
+    >
       <el-input
         placeholder="Search something"
         prefix-icon="el-icon-search"
@@ -63,7 +66,7 @@
     </div> -->
 
     <!-- log in/ sign up buttons -->
-    <div class="">
+    <div class="" style="margin-left: 14%">
       <!-- buttons if user is not logged in -->
       <router-link to="/login" class="none main-only">
         <button class="btn btn-accent">Log In</button>
@@ -132,6 +135,7 @@ export default {
   border-bottom: 1px solid black;
   text-decoration: none;
   box-shadow: 0px 1px 3px grey;
+  /* margin-left: 50vw; */
 }
 .logo {
   font-size: 26px;

@@ -54,17 +54,17 @@ export default {
     };
   },
 
-  // mounted() {
-  //   axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
-  //     this.api = res.data;
-  //     this.work = res.data[0];
-  //     setTimeout(() => {
-  //       this.loading = false;
-  //     }, 2000);
-  //     console.log(res.data);
-  //     console.log(res.data[0]);
-  //   });
-  // },
+  mounted() {
+    axios.get("http://192.168.199.109").then((res) => {
+      this.api = res.data;
+      this.work = res.data[0];
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+      console.log(res.data);
+      console.log(res.data[0]);
+    });
+  },
 };
 </script>
 

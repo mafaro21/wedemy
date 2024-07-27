@@ -12,8 +12,8 @@
       <h1>View some of our finest courses</h1>
 
       <div class="home-view" style="margin-top: 20px">
-        <h3>Learn this</h3>
-        <p>blah blah just buy it</p>
+        <h3 style="margin-left: 39px">Learn this</h3>
+        <!-- <p>just buy it</p> -->
 
         <!-- category catalog -->
         <router-link to="/course" style="text-decoration: none">
@@ -27,11 +27,11 @@
               <el-card
                 :body-style="{ padding: '0px' }"
                 shadow="hover"
-                style="margin-bottom: 13px"
+                style="margin-bottom: 13px; margin-left: 19px"
                 v-for="o in 5"
                 :key="o"
               >
-                <img src="../images/1613872731202.png" class="product-img" />
+                <img src="../images/Screenshot (1).png" class="product-img" />
                 <div style="padding: 14px">
                   <span class="card-title">Course name</span>
                   <div class="card-author"><span>Course author</span></div>
